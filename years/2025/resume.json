@@ -1,15 +1,15 @@
 {
     "available": {
         "overtime": 0,
-        "time_off": 0,
+        "time_off": 2,
         "vacations": 0
     },
     "January": {
-        "hours": 0,
-        "overtime": 0,
-        "time_off": 0,
+        "hours": 180,
+        "overtime": 20,
+        "time_off": 3,
         "vacations": 0,
-        "workdays": 0
+        "workdays": 20
     },
     "February": {
         "hours": 0,
