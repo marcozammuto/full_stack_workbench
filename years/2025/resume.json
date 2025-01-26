@@ -5,11 +5,11 @@
         "vacations": 0
     },
     "January": {
-        "hours": 9,
-        "overtime": 1,
+        "hours": 0,
+        "overtime": 0,
         "time_off": 0,
         "vacations": 0,
-        "workdays": 1
+        "workdays": 0
     },
     "February": {
         "hours": 0,

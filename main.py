@@ -6,16 +6,17 @@ import shutil
 from dateutil.relativedelta import relativedelta
 
 # general variables for later
-now = datetime.datetime.now()
-tomorrow = now + relativedelta(days=1)
-year = now.strftime("%Y")
-month = now.strftime("%B")
-day = now.strftime("%d")
-week_day = now.strftime("%a")
+today = datetime.datetime.now()
+tomorrow = today + relativedelta(days=1)
+yesterday = today - relativedelta(days=1)
+year = today.strftime("%Y")
+month = today.strftime("%B")
+day = today.strftime("%d")
+week_day = today.strftime("%a")
 
 # must be set by users
-# 0 = monday, 6 = sunday
-last_week_day = 5
+# 0 = sunday, 6 = saturday, 5 set to friday
+last_weekday = 5
 daily_work_hours = 8
 
 # truncates all
@@ -24,10 +25,24 @@ debug_mode = True
 # files, folders, csv headers and paths
 folder = "years"
 today_file = month
-fields = ["day","weekday", "extra_hours","type","interval"]
+fields = ["day","weekday", "extra_hours","type","interval","fields","reason"]
 year_folder = f"{folder}/{year}"
 yearly_json_filename = "resume"
 
+# functions
+def is_last_month_day():
+     return today.day > tomorrow.day
+
+def is_week_day(input_weekday):
+     return int(input_weekday) > 0 and int(input_weekday) <= int(last_weekday)
+
+def move_file_to_yearly_folder():
+     next_month = tomorrow.strftime("%B")
+
+def write_log(text):
+     with open("logs.txt", "a") as file:
+          file.write(f"{today.strftime("%Y-%m-%d, %H:%M:%S")} - {text}\n")   
+  
 # create a year folder inside the main records folder
 if not os.path.exists(year_folder):
      os.makedirs(year_folder)
@@ -43,7 +58,7 @@ if not os.path.isfile(f"{year_folder}/{yearly_json_filename}.json"):
                }
           }
           for x in range(12):
-               new_date = now + relativedelta(months=x)
+               new_date = today + relativedelta(months=x)
                new_month = new_date.strftime("%B")
                init_object[new_month] = { 
                     "hours": 0,
@@ -53,36 +68,43 @@ if not os.path.isfile(f"{year_folder}/{yearly_json_filename}.json"):
                     "workdays": 0
                          }               
           json.dump(init_object, file, indent=4)
-
-
-def is_last_month_day():
-     return now.day > tomorrow.day
-
-def is_week_day():
-     return now.weekday() <= last_week_day
+ 
+     
+# if first month day, move the previous csv on the year folder
+yesterday_month = yesterday.strftime("%B")
+yesterday_month_path_folder = f"{folder}/{yesterday.strftime("%Y")}"
+destination_file = f"{yesterday_month_path_folder}/{yesterday_month}.csv"
+if int(day) == 1:
+     if os.path.exists(yesterday_month_path_folder):
+          shutil.move(f"{yesterday_month}.csv", destination_file)
+     else:
+          os.makedirs(yesterday_month_path_folder)   
+     if os.path.exists(f"{yesterday_month}.csv"):  
+          with open(f"{yesterday_month}.csv", "r") as r_file:
+               with open(destination_file, "w") as w_file:
+                    w_file.write(r_file.read())
+else:
+     write_log("Il file del mese precedente non esiste.")
 
 # if today.csv is not already been created, I create and format a file
-def create_monthly_file():
-     if not os.path.isfile(f"{today_file}.csv") :
-          with open(f"{today_file}.csv", "w") as file:
-               writer = csv.writer(file)
-               writer.writerow(fields)
-                    # let's print a row per day
-               for x in range(1,32):
-                    day_of_the_month = datetime.datetime(year=int(year), month=int(now.strftime("%m")), day=x)
-                         # if today's date is more than tomorrow, it means the month is over
-                    if is_last_month_day() == False:
-                         if is_week_day() == True: 
+if not os.path.isfile(f"{today_file}.csv") :
+     with open(f"{today_file}.csv", "w") as file:
+          writer = csv.writer(file)
+          writer.writerow(fields)
+          # let's print a row per day
+          for x in range(1,32):
+               day_of_the_month = datetime.datetime(year=int(year), month=int(today.strftime("%m")), day=x)
+               # if today's date is more than tomorrow, it means the month is over
+               if is_last_month_day() == False:
+                    if is_week_day(day_of_the_month.strftime("%w")) == True: 
                          # every day has a weekday, date, eight hours by default and an empty value for the type of extra work time (vacation, time-off, etc..)
-                              day_row = [day_of_the_month.strftime("%d"),day_of_the_month.strftime("%a"), 0,"=","9.00/18.00;"]
-                              writer.writerow(day_row)
-                         else:
-                              exit()
-                              
-create_monthly_file()
-               
+                         day_row = [day_of_the_month.strftime("%d"),day_of_the_month.strftime("%a"), 0,"=","9.00/18.00;"]
+                         writer.writerow(day_row)
+                    else:
+                         continue
+
 # reading today's hours and valorizing all variables to update report.json
-if is_week_day():
+if is_week_day(today.strftime("%w")):
      with open(f"{today_file}.csv", "r") as file:
           next(file)
           reader = csv.reader(file)
@@ -93,30 +115,23 @@ if is_week_day():
                     type = row[3]
                     interval = row[4]
                     today_worked_hours = eval(f"8{type}{extra_hours}") if type in ["+","-"] else 8
+                    write_log(today_worked_hours)
           file.close()
+     with open(f"{year_folder}/{yearly_json_filename}.json", "r") as file:
+          data = json.load(file)
+          data[month]["workdays"] += 1          
+          data[month]["hours"] += today_worked_hours
+     if type == '-':
+          data[month]["time_off"] += extra_hours
+          data["available"]["time_off"] -= extra_hours
+     elif type == '+':
+          data[month]["overtime"] += extra_hours
+     elif type == '!':
+          data[month]["vacations"] -= 1
 
+     with open(f"{year_folder}/{yearly_json_filename}.json", "w") as file:
+          json.dump(data, file, indent=4)
 
-with open(f"{year_folder}/{yearly_json_filename}.json", "r") as file:
-     data = json.load(file)
-     data[month]["workdays"] += 1
-     data[month]["hours"] += today_worked_hours
-     extra_hour_type = None
-if type == '-':
-     data[month]["time_off"] += extra_hours
-     data["available"]["time_off"] -= extra_hours
-elif type == '+':
-     data[month]["overtime"] += extra_hours
-elif type == '!':
-     data[month]["vacations"] -= 1
-
-with open(f"{year_folder}/{yearly_json_filename}.json", "w") as file:
-     json.dump(data, file, indent=4)
-
-# after updating the report, if it's the last month day, 
-# I move the report inside the related year folder and start a new csv again
-
-
-# if is_last_month_day() == True:
 
                
                
