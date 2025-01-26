@@ -1,0 +1,91 @@
+{
+    "available": {
+        "overtime": 0,
+        "time_off": 0,
+        "vacations": 0
+    },
+    "January": {
+        "hours": 9,
+        "overtime": 1,
+        "time_off": 0,
+        "vacations": 0,
+        "workdays": 1
+    },
+    "February": {
+        "hours": 0,
+        "overtime": 0,
+        "time_off": 0,
+        "vacations": 0,
+        "workdays": 0
+    },
+    "March": {
+        "hours": 0,
+        "overtime": 0,
+        "time_off": 0,
+        "vacations": 0,
+        "workdays": 0
+    },
+    "April": {
+        "hours": 0,
+        "overtime": 0,
+        "time_off": 0,
+        "vacations": 0,
+        "workdays": 0
+    },
+    "May": {
+        "hours": 0,
+        "overtime": 0,
+        "time_off": 0,
+        "vacations": 0,
+        "workdays": 0
+    },
+    "June": {
+        "hours": 0,
+        "overtime": 0,
+        "time_off": 0,
+        "vacations": 0,
+        "workdays": 0
+    },
+    "July": {
+        "hours": 0,
+        "overtime": 0,
+        "time_off": 0,
+        "vacations": 0,
+        "workdays": 0
+    },
+    "August": {
+        "hours": 0,
+        "overtime": 0,
+        "time_off": 0,
+        "vacations": 0,
+        "workdays": 0
+    },
+    "September": {
+        "hours": 0,
+        "overtime": 0,
+        "time_off": 0,
+        "vacations": 0,
+        "workdays": 0
+    },
+    "October": {
+        "hours": 0,
+        "overtime": 0,
+        "time_off": 0,
+        "vacations": 0,
+        "workdays": 0
+    },
+    "November": {
+        "hours": 0,
+        "overtime": 0,
+        "time_off": 0,
+        "vacations": 0,
+        "workdays": 0
+    },
+    "December": {
+        "hours": 0,
+        "overtime": 0,
+        "time_off": 0,
+        "vacations": 0,
+        "workdays": 0
+    }
+}
