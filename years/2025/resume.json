@@ -1,22 +1,22 @@
 {
     "available": {
         "overtime": 0,
-        "time_off": 2,
+        "time_off": 0,
         "vacations": 0
     },
     "January": {
-        "hours": 180,
-        "overtime": 20,
-        "time_off": 3,
-        "vacations": 0,
-        "workdays": 20
-    },
-    "February": {
         "hours": 0,
         "overtime": 0,
         "time_off": 0,
         "vacations": 0,
         "workdays": 0
+    },
+    "February": {
+        "hours": 8,
+        "overtime": 0,
+        "time_off": 0,
+        "vacations": 0,
+        "workdays": 1
     },
     "March": {
         "hours": 0,
@@ -75,13 +75,6 @@
         "workdays": 0
     },
     "November": {
-        "hours": 0,
-        "overtime": 0,
-        "time_off": 0,
-        "vacations": 0,
-        "workdays": 0
-    },
-    "December": {
         "hours": 0,
         "overtime": 0,
         "time_off": 0,
