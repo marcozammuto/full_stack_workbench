@@ -1,98 +1,96 @@
-import csv
 import os
 import json
 import datetime
-import shutil
+from utils.date import DateUtils
+from utils.csv import CsvUtils
 
-def create_file(path:str, isFile:str):
-    if not os.path.exists(path):
-        if isFile == True:
-            with open(path, "w+") as empty_file:
-                empty_file.close()
-        else:
-            os.makedirs(path, exist_ok=False)
-    else:
-        print(f"{path} already exists")
 
-def move_file(filename:str,path:str):
-     if os.path.exists(path):
-          shutil.move(filename, f"{path}/{filename}")
-     else:
-         os.makedirs(path, exist_ok=False)
-         if os.path.exists(filename):
-           shutil.move(filename, f"{path}/{filename}")
-         else:
-             print("The desired file to move is not available")
-        
-        
-fieldnames = ["day","weekday","extra_hours","variation_type","start","finish","lunch_break_skipped","notes"]
-
-def create_new_month_file(filename):
-     with open(filename,"w") as out_csv:
-        writer = csv.DictWriter(out_csv, fieldnames=fieldnames)
-        writer.writeheader()
-        print("File created")
-        
-def add_csv_header(filename):
-    fieldnames = ['day', 'weekday', 'id', 'symbol', 'start', 'end', 'checked', 'notes']
+class PathUtils:
+    @staticmethod
+    def _get_base_path():
+        cwd = os.path.dirname(os.path.abspath(__file__))
+        return os.path.dirname(os.path.dirname(cwd))
     
-    with open(filename, "w", newline='') as out_csv:
-        writer = csv.DictWriter(out_csv, fieldnames=fieldnames)
-        writer.writeheader()
+    @staticmethod
+    def _get_data_path(): 
+        path = os.path.join(PathUtils._get_base_path(), os.environ.get('MAIN_FOLDER_NAME'))
+        os.makedirs(path, exist_ok=True)
+        return path
+   
+    @staticmethod
+    def get_blueprint_folder_path():
+        path = os.path.join(PathUtils._get_base_path(), os.environ.get('BLUEPRINT_FOLDER_NAME'))
+        os.makedirs(path, exist_ok=True)
+        return path
+    
 
-def add_csv_row(filename):
-    with open(filename, 'w', newline='') as outcsv:
-     writer = csv.DictWriter(outcsv, fieldnames = ["day","weekday","extra_hours","type","interval","fields","reason"])
-     writer.writeheader()
-        
+    @staticmethod
+    def year():
+        year_folder = os.path.join(PathUtils._get_data_path(), DateUtils.today().strftime("%Y"))
+        os.makedirs(year_folder, exist_ok=True)
+        year_file_path = os.path.join(year_folder, f"{os.environ['YEAR_RESUME_FILENAME']}.json")
+        if not os.path.exists(year_file_path):
+            with open (year_file_path, "w+") as f:
+                json.dump({}, f, indent=4)
+        return year_file_path
+
+    @staticmethod
+    def month(short_month_name):
+        month_file = os.path.join(PathUtils._get_data_path(), DateUtils.today().strftime("%Y"), f"{short_month_name}.csv")
+        return month_file
 
 
-def initialize_json_resume_file(path):
-     if not os.path.exists(path):
-          create_file(path, True)
-     else:
-         print(f"File with name {path} already exists")
-          
-     with open(path, "w") as json_resume_file:
-        init_object = {"available": {"overtime": 0, "time_off": 0, "vacations": 0}}
-        today_year = datetime.datetime.now().strftime("%Y")
-        for x in range(1, 13):
-            new_date = datetime.datetime(int(today_year), int(x), 1)
-            new_month = new_date.strftime("%B")
-            init_object[new_month] = {
-                 "hours": 0,
-                 "overtime": 0,
-                 "time_off": 0,
-                 "vacations": 0,
-                 "workdays": 0,
-                 }
-            json.dump(init_object, json_resume_file, indent=4)
-               
-def populate_csv_file(filename):
-     create_file(f"{filename}.csv",True)
-     with open(f"{filename}.csv", "w", newline="") as file:
-        writer = csv.writer(file)
-        writer.writerow(["day", "weekday", "extra_hours", "type", "interval", "fields", "reason"])
-        # let's print a row per day
-        for x in range(1, 32):
-            try:
-                day_of_the_month = datetime.datetime(
-                    year=int(year), month=int(today.strftime("%m")), day=int(x)
-                )
-                # if today's date is more than tomorrow, it means the month is over
-                if not is_last_month_day(today=today, tomorrow=tomorrow):
-                    if is_week_day(day_of_the_month.strftime("%w")):
-                        # every day has a weekday, date, eight hours by default and an empty
-                        # value for the type of extra work time (vacation, time-off, etc..)
-                        day_row = [
-                            day_of_the_month.strftime("%d"),
-                            day_of_the_month.strftime("%a"),
-                            0,
-                            "=",
-                            "9.00/18.00;",
-                        ]
-                        writer.writerow(day_row)
-                    else:
-                        continue
-            except ValueError:
-                break
+
+
+class CreateFileUtils:
+    class Blueprint:
+         def __init__(self, path, nodes):
+            self.path = path
+            self.nodes = nodes
+
+    class initialize:
+        @staticmethod
+        def year():
+            blueprint = CreateFileUtils.Blueprint(
+                path = os.path.join(PathUtils.get_blueprint_folder_path(), f"{os.environ['YEAR_BLUEPRINT_FILENAME']}.json"),
+                nodes = None
+            )
+            
+            with open(blueprint.path, "r") as f:
+                blueprint.nodes = json.load(f)
+                f.close()
+            json_file_path = PathUtils.year()
+            with open(json_file_path, "w") as json_resume_file:
+                shared_node = os.environ['YEAR_BLUEPRINT_RESUME_NODE_OBJ_NAME']
+                obj = {
+                        f'{os.environ['YEAR_BLUEPRINT_AVAILABLE_NODE_OBJ_NAME']}': blueprint.nodes[shared_node],
+                        f'{os.environ['YEAR_BLUEPRINT_USED_NODE_OBJ_NAME']}': blueprint.nodes[shared_node]
+                    }
+                for x in range(1, 13):
+                    date = datetime.datetime(year=int(datetime.datetime.now().strftime("%Y")), month=int(x), day=1)
+                    new_month = date.strftime("%B")
+                    merged = {**blueprint.nodes[shared_node], **blueprint.nodes[os.environ['YEAR_BLUEPRINT_RESUME_MONTH_NODE_OBJ_NAME']]}
+                    obj[new_month] = merged
+                json.dump(obj, json_resume_file, indent=4)
+        def month():
+            
+            class Csv:
+             def __init__(self, path, columns):
+                self.path = path
+                self.columns = columns
+            
+            blueprint = CreateFileUtils.Blueprint(
+                path =  os.path.join(PathUtils.get_blueprint_folder_path(), f"{os.environ['MONTH_BLUEPRINT_FILENAME']}.json"),
+                nodes = None
+            )
+            
+            with open(blueprint.path, "r") as f:
+                blueprint.nodes = json.load(f)
+                f.close()
+                                
+            csv = Csv(f"{PathUtils.month(DateUtils.today().strftime("%B"))}",blueprint.nodes[os.environ['MONTH_CSV_COLUMNS']])
+                        
+            CsvUtils.header.add(csv.path, csv.columns)
+            CsvUtils.row.add(csv.path, csv.columns)
+            
+            
