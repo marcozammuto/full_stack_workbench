@@ -3,7 +3,11 @@ import datetime
 
 from dotenv import load_dotenv
 from utils.date import DateUtils
+<<<<<<< HEAD
+from utils.string import sanitize_input
+=======
 from utils.string import capitalize_string, sanitize_input
+>>>>>>> db893b6 (py: terminal is now working, should work more on the adding rows part)
 from utils.fs import CreateFileUtils, PathUtils
 from utils.terminal import TerminalUtils
 
@@ -19,7 +23,10 @@ def main():
     TerminalUtils.clear()
     interactions = TerminalUtils.get_interactions()    
     TerminalUtils.print_choices(interactions=interactions[os.environ['TERMINAL_MENU_KEY']])
+<<<<<<< HEAD
+=======
      
+>>>>>>> db893b6 (py: terminal is now working, should work more on the adding rows part)
     input = sanitize_input(indexable=False)
     if isinstance(input, int) and input <= len(interactions):
           if input == 4:
