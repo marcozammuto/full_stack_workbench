@@ -1,10 +1,14 @@
-def sanitize_input(indexable=True):
+def sanitize_input(allowed_inputs):
+    x = input()
     try:
-        x = input()
-        input_to_test = int(x)
-        return input_to_test - 1 if not indexable else input_to_test
+        x = int(x) - 1 
     except ValueError:
-        return False
+        raise ("Inserisci un numero") 
+    if x in allowed_inputs:
+        return x
+    else:
+        raise IndexError("Opzione non valida")
+
 
 def capitalize_string(string):
     return f"{string[0].capitalize()}{string[1 : len(string)]}"

@@ -4,11 +4,11 @@
   "invalid": "Scelta non valida",
   "report": [
     "Questo mese hai effettuato {{placeholder}} or di straordinario",
-    "Hai a disposizione {{placeholder}} or di permessi",
+    "Hai usufruito di {{placeholder}} or di permessi orari",
     "Hai accumulato {{placeholder}} giorn di ferie",
     "Di quale mese vuoi che ti faccia un report?"
   ],
-  "resume": "Riepilogo",
+  "resume": "Riepilogo {{placeholder}}",
   "menu": [
     {
       "label": "straordinari",
@@ -22,7 +22,10 @@
       "label": "ferie",
       "object": "vacations"
     },
-    { "label": "check di un mese", "object": "vacations" }
+    {
+      "label": "check di un mese",
+      "object": "vacations"
+    }
   ],
   "italian_months": [
     "gennaio",
