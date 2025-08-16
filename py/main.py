@@ -6,6 +6,7 @@ from utils.date import DateUtils
 from utils.string import sanitize_input
 from utils.fs import CreateFileUtils, PathUtils
 from utils.terminal import TerminalUtils
+from utils.request import RequestUtils
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -19,6 +20,12 @@ def main():
     
     TerminalUtils.clear()
     TerminalUtils.print_choices(interactions=interactions)
+    
+    print(datetime.date().isoformat())
+    exit()
+    
+    
+    RequestUtils.check_national_holiday(datetime.date().isoformat())
 
     try:  
         input = sanitize_input(list(range(len(interactions) - 3)))  
