@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-CreateFileUtils.initialize.year()
+CreateFileUtils.initialize.year(datetime.today().strftime("%Y"))
 CreateFileUtils.initialize.month()
     
 def main():    
@@ -21,13 +21,13 @@ def main():
     TerminalUtils.print_choices(interactions=interactions)
 
     try:  
-        input = sanitize_input(list(range(len(interactions) - 3)))         
+        input = sanitize_input(list(range(len(interactions) - 3)))  
         with open(PathUtils.year(datetime.today().strftime("%Y")), "r") as f:
             data = json.load(f)
             if not data:
                 raise FileNotFoundError("File non trovato")
                     
-        TerminalUtils.menu(data=data, month=data[f'{datetime.today().strftime("%B")}'], input=input, interactions=interactions)
+        TerminalUtils.menu(data=data, month=data[f'{DateUtils.today().strftime("%B")}'], input=input, interactions=interactions)
                 
     except Exception as te:
         print(te)

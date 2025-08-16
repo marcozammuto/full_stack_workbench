@@ -36,14 +36,17 @@ class TerminalUtils:
     @staticmethod
     def menu(data, month, input, interactions):
          
-         answer = interactions[os.environ['YEAR_BLUEPRINT_REPORT_MONTH_NODE_OBJ_NAME']][input]   
+         answers = interactions[os.environ['YEAR_BLUEPRINT_REPORT_MONTH_NODE_OBJ_NAME']]
+         answer = answers[input]
+                  
          hour_regex = r'(?<=\s)or(?=\s)'
          day_regex = r'(?<=\s)giorn(?=\s)'
          
+
          available = data[os.environ['YEAR_BLUEPRINT_AVAILABLE_NODE_OBJ_NAME']]
-                           
+                                                   
          match input:
-             case 0:
+             case 0:         
                  value = month[os.environ['YEAR_OVERTIME_KEY']]
                  print(re.sub(hour_regex, 'ora' if value == 1 else 'ore',render_string(answer, value)))
              case 1:
