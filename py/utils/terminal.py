@@ -21,56 +21,102 @@ class TerminalUtils:
     @staticmethod
     def clear():
         os.system("cls" if os.name == "nt" else "clear")
-        print("Scelta non valida, riprova.\n")
         
     @staticmethod
     def print_choices(interactions):
-        for idx, action in enumerate(interactions):
+        print(interactions[os.environ['TERMINAL_INTRO_KEY']])
+        for idx, action in enumerate(interactions[os.environ['TERMINAL_MENU_KEY']]):
             print(f"{idx + 1} - {capitalize_string(action['label'])}")  
-        
-    
+            
     @staticmethod
-    def print_answer(data, month, available, used, answers, input, interactions):
-         today = DateUtils.today()
-         year = today.strftime("%Y")
-         answer = answers[input]   
+    def raise_error(message):
+        print(message)
+
+
+    @staticmethod
+    def menu(data, month, input, interactions):
+         
+         answer = interactions[os.environ['YEAR_BLUEPRINT_REPORT_MONTH_NODE_OBJ_NAME']][input]   
          hour_regex = r'(?<=\s)or(?=\s)'
          day_regex = r'(?<=\s)giorn(?=\s)'
          
-         print(interactions[os.environ['TERMINAL_INTRO_KEY']])
-
+         available = data[os.environ['YEAR_BLUEPRINT_AVAILABLE_NODE_OBJ_NAME']]
+                           
          match input:
              case 0:
                  value = month[os.environ['YEAR_OVERTIME_KEY']]
                  print(re.sub(hour_regex, 'ora' if value == 1 else 'ore',render_string(answer, value)))
-                 exit()
              case 1:
                  value = month[os.environ['YEAR_TIME_OFF_KEY']]
                  print(re.sub(hour_regex, 'ora' if value == 1 else 'ore',render_string(answer, value)))
-                 exit()
+                 value = data[os.environ['YEAR_BLUEPRINT_AVAILABLE_NODE_OBJ_NAME']][os.environ['YEAR_TIME_OFF_KEY']]
+                 print(re.sub(hour_regex, 'ora' if value == 1 else 'ore',render_string("Hai ancora a disposizione {{placeholder}} or di ROL", value)))
              case 2:
-                 value = available[os.environ['YEAR_VACATION_KEY']]
+                 value = month[os.environ['YEAR_VACATION_KEY']]
                  print(re.sub(day_regex, 'giorno' if value == 1 else 'giorni', render_string(answer, value)))
-                 exit()
+                 value = available[os.environ['YEAR_VACATION_KEY']]
+                 print(re.sub(day_regex, 'giorno' if value == 1 else 'giorni',render_string("Hai ancora a disposizione {{placeholder}} giorn di ferie", value)))
              case 3:
-                 print(answer)
-                 italian_months = interactions[os.environ['TERMINAL_ITALIAN_MONTHS_KEY']]
-                 allowed_answers = []
-                 
-                 for idx, month_it in enumerate(italian_months):
-                     if idx < int(today.strftime("%m")):
-                         allowed_answers.append(idx + 1)
-                         print(f"{idx + 1} - {capitalize_string(month_it)}")
+                 TerminalUtils.print_month_report(interactions=interactions, data=data, input=input)
+             case _:
+                TerminalUtils.raise_error(interactions[os.environ['TERMINAL_INVALID_KEY']])
 
-                 allowed_answers.append(13)                                  
-                 print(f"13 - {capitalize_string(italian_months[-1])}")
+    @staticmethod
+    def print_month_report(interactions, data, input):
+        TerminalUtils.clear()
+        print(interactions[os.environ['YEAR_BLUEPRINT_REPORT_MONTH_NODE_OBJ_NAME']][3])
+        today = DateUtils.today()
+        year = today.strftime("%Y")
+        allowed_answers = []
+        other_year_option = 12
+        italian_months = interactions[os.environ['TERMINAL_ITALIAN_MONTHS_KEY']]                 
+       
+        for idx, month_it in enumerate(italian_months):
+            if idx < int(today.strftime("%m")):
+                allowed_answers.append(idx)
+                print(f"{idx + 1} - {capitalize_string(month_it)}")
+        allowed_answers.append(other_year_option)                                  
+        print(f"13 - {capitalize_string(italian_months[-1])}")
+        
+        input = sanitize_input(allowed_answers) 
+
+        if input != other_year_option:
+            selected_month = data[datetime.date(int(year), int(input + 1), 1).strftime('%B')]           
+            TerminalUtils.clear()
+            print(f"===\nReport del mese di {italian_months[input]} {year}")
+            print("Hai effettuato:")
+            for idx, v in enumerate(interactions["menu"]):
+                if idx <= 2:
+                    print(f"{v['label']}: {selected_month[v['object']]}")
+                else:
+                    break
+            print("===")
+        else:
+            data_path = PathUtils.get_data_path()
+            directories = os.scandir(data_path)            
+            
+            allowed_answers = []
+            available_years = []
+            
+            print("==\nDi quale anno vuoi vedere il report?")
+            for idx, year in enumerate(directories):
+                allowed_answers.append(idx)
+                name = year.name
+                available_years.append(name)
+                print(f"{idx + 1} - {name}")
+            
+            input = sanitize_input(allowed_answers)
+            input = available_years[input]
+            
+            json_year_filepath = os.path.join(data_path, input, "resume.json")
+            
+            with open(json_year_filepath, "r") as f:
+                data = json.load(f)
+                print(f"==\n Report anno {input}")
+                TerminalUtils.print_choices(interactions=interactions)
+                input = sanitize_input([0,1])
                 
-                 input = sanitize_input(True) 
-
-                 if input not in allowed_answers:
-                     print(interactions[os.environ['TERMINAL_INVALID_KEY']])
-                 else:
-                     month_node = data[datetime.date(int(year), int(input), 1).strftime('%B')]
-                     TerminalUtils.print_choices(interactions=interactions[os.environ['TERMINAL_MENU_KEY']])     
-                     TerminalUtils.print_answer(data=data, month=month_node, available=data[os.environ['YEAR_BLUEPRINT_AVAILABLE_NODE_OBJ_NAME']], used=None, answers=interactions[os.environ['TERMINAL_REPORT_ANSWERS_LIST_KEY']], input=input, interactions=interactions)
-
+                TerminalUtils.menu(data, data["January"], input, interactions)
+    
+            print("Simon")
+            

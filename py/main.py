@@ -1,33 +1,35 @@
+import os
+import json
+from datetime import datetime
 
-import datetime
-
-from dotenv import load_dotenv
 from utils.date import DateUtils
 from utils.string import sanitize_input
 from utils.fs import CreateFileUtils, PathUtils
 from utils.terminal import TerminalUtils
-
-import os
-import json
+from dotenv import load_dotenv
 
 load_dotenv()
 
 CreateFileUtils.initialize.year()
 CreateFileUtils.initialize.month()
     
-def main():     
-    TerminalUtils.clear()
+def main():    
     interactions = TerminalUtils.get_interactions()    
-    TerminalUtils.print_choices(interactions=interactions[os.environ['TERMINAL_MENU_KEY']])
-    input = sanitize_input(indexable=False)
-    if isinstance(input, int) and input <= len(interactions):
-          if input == 4:
-              os.system("cls" if os.name == "nt" else "clear")
-              print(interactions[os.environ['TERMINAL_OUTRO_KEY']])
-          else:
-              
-            with open(PathUtils.year(), "r") as f:
-                 data = json.load(f)      
-                 TerminalUtils.print_answer(data=data, month=data[f'{DateUtils.today().strftime("%B")}'], available=data[os.environ['YEAR_BLUEPRINT_AVAILABLE_NODE_OBJ_NAME']], used=None, answers=interactions[os.environ['TERMINAL_REPORT_ANSWERS_LIST_KEY']], input=input, interactions=interactions)
-                                  
+    data = None
+    
+    TerminalUtils.clear()
+    TerminalUtils.print_choices(interactions=interactions)
+
+    try:  
+        input = sanitize_input(list(range(len(interactions) - 3)))         
+        with open(PathUtils.year(datetime.today().strftime("%Y")), "r") as f:
+            data = json.load(f)
+            if not data:
+                raise FileNotFoundError("File non trovato")
+                    
+        TerminalUtils.menu(data=data, month=data[f'{datetime.today().strftime("%B")}'], input=input, interactions=interactions)
+                
+    except Exception as te:
+        print(te)
+            
 main()
