@@ -31,3 +31,5 @@ day,extra_hours,variation_type,start,finish,lunch_break_skipped,national_holiday
 2024-08-30,0,=,9:00,18:00,False,False,
 2024-08-31,0,=,9:00,18:00,False,False,
 2025-08-16,0,=,9:00,18:00,False,False,
+2025-08-17,0,=,9:00,18:00,False,False,
+2025-08-18,0,=,9:00,18:00,False,False,

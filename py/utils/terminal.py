@@ -36,13 +36,12 @@ class TerminalUtils:
     @staticmethod
     def menu(data, month, input, interactions):
          
-         answer = interactions[os.environ['YEAR_BLUEPRINT_REPORT_MONTH_NODE_OBJ_NAME']][input]   
-         hour_regex = r'(?<=\s)or(?=\s)'
-         day_regex = r'(?<=\s)giorn(?=\s)'
-         
-         available = data[os.environ['YEAR_BLUEPRINT_AVAILABLE_NODE_OBJ_NAME']]
+        answer = interactions[os.environ['YEAR_BLUEPRINT_REPORT_MONTH_NODE_OBJ_NAME']][input]   
+        hour_regex = r'(?<=\s)or(?=\s)'
+        day_regex = r'(?<=\s)giorn(?=\s)'    
+        available = data[os.environ['YEAR_BLUEPRINT_AVAILABLE_NODE_OBJ_NAME']]
                            
-         match input:
+        match input:
              case 0:
                  value = month[os.environ['YEAR_OVERTIME_KEY']]
                  print(re.sub(hour_regex, 'ora' if value == 1 else 'ore',render_string(answer, value)))
@@ -60,7 +59,50 @@ class TerminalUtils:
                  TerminalUtils.print_month_report(interactions=interactions, data=data, input=input)
              case _:
                 TerminalUtils.raise_error(interactions[os.environ['TERMINAL_INVALID_KEY']])
+                
+    @staticmethod
+    def print_old_year_report(input, data, interactions):
+            TerminalUtils.clear()
+            print(f"===\nNel {input} hai effettuato:")
+            
+            resume = {
+                os.environ['YEAR_OVERTIME_KEY'] : 0,
+                os.environ['YEAR_TIME_OFF_KEY'] : 0,
+                os.environ['YEAR_VACATION_KEY'] : 0,
+                os.environ['YEAR_SICK_DAY_KEY'] : 0
+            }
+                        
+            del data[os.environ['YEAR_BLUEPRINT_AVAILABLE_NODE_OBJ_NAME']]
+                        
+            for month in data:
+                resume[os.environ['YEAR_OVERTIME_KEY']] += data[month][os.environ['YEAR_OVERTIME_KEY']]
+                resume[os.environ['YEAR_TIME_OFF_KEY']] += data[month][os.environ['YEAR_TIME_OFF_KEY']]
+                resume[os.environ['YEAR_VACATION_KEY']] += data[month][os.environ['YEAR_VACATION_KEY']]
+                resume[os.environ['YEAR_SICK_DAY_KEY']] += data[month][os.environ['YEAR_SICK_DAY_KEY']]
 
+            for k in resume.keys():
+                print(f"{k}: {resume[k]}")
+            print("===\nVuoi effettuare il check di un mese in particolare?\n1 - Sì\n2 - No")
+            
+            input = sanitize_input([0,1])
+            
+            if input == 1:
+                TerminalUtils.clear()
+                print("Grazie, a presto!")
+                exit()
+            else:
+                print(f"Di quale mese del {input} vuoi effettuare un check?")
+                months_list = list(range(0,12))
+                for x in months_list:
+                    print(f"{x + 1} - {capitalize_string(interactions[os.environ['TERMINAL_ITALIAN_MONTHS_KEY']][x])}")
+                
+                input = sanitize_input(months_list)
+                
+                print(data[list(data.keys())[input]])
+                
+           
+        
+        
     @staticmethod
     def print_month_report(interactions, data, input):
         TerminalUtils.clear()
@@ -106,17 +148,11 @@ class TerminalUtils:
                 print(f"{idx + 1} - {name}")
             
             input = sanitize_input(allowed_answers)
-            input = available_years[input]
-            
+            input = available_years[input]            
             json_year_filepath = os.path.join(data_path, input, "resume.json")
             
             with open(json_year_filepath, "r") as f:
                 data = json.load(f)
-                print(f"==\n Report anno {input}")
-                TerminalUtils.print_choices(interactions=interactions)
-                input = sanitize_input([0,1])
-                
-                TerminalUtils.menu(data, data["January"], input, interactions)
-    
-            print("Simon")
+                TerminalUtils.print_old_year_report(input=input, data=data, interactions=interactions)
+        
             

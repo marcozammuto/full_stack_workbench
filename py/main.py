@@ -2,7 +2,6 @@ import os
 import json
 from datetime import datetime
 
-from utils.date import DateUtils
 from utils.string import sanitize_input
 from utils.fs import CreateFileUtils, PathUtils
 from utils.terminal import TerminalUtils
@@ -26,9 +25,7 @@ def main():
             data = json.load(f)
             if not data:
                 raise FileNotFoundError("File non trovato")
-                    
         TerminalUtils.menu(data=data, month=data[f'{datetime.today().strftime("%B")}'], input=input, interactions=interactions)
-                
     except Exception as te:
         print(te)
             
