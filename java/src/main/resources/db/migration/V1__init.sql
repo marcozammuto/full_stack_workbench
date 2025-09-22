@@ -1,0 +1,34 @@
+CREATE TABLE IF NOT EXISTS role(
+id SERIAL PRIMARY KEY,
+name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS app_user(
+  id SERIAL PRIMARY KEY,
+  email VARCHAR(234) NOT NULL UNIQUE,
+  first_name VARCHAR(50) NOT NULL,
+  last_name VARCHAR(50) NOT NULL,
+  role_id INT NOT NULL REFERENCES role (id)
+);
+
+CREATE TABLE IF NOT EXISTS day_status(
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS day(
+  id SERIAL PRIMARY KEY,
+  date DATE NOT NULL DEFAULT CURRENT_DATE,
+  status_id INT NOT NULL REFERENCES day_status(id)
+);
+
+CREATE TABLE IF NOT EXISTS day_log (
+  id SERIAL PRIMARY KEY,
+  user_id INT REFERENCES app_user (id),
+  day_id INT REFERENCES day (id),
+  worked_hours INT DEFAULT 8,
+  variation_status_id INT REFERENCES day_status (id),
+  start TIME NOT NULL DEFAULT '09:00',
+  stop TIME NOT NULL DEFAULT '18:00',
+  notes VARCHAR(255)
+);

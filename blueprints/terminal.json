@@ -9,24 +9,65 @@
     "Di quale mese vuoi che ti faccia un report?"
   ],
   "resume": "Riepilogo {{placeholder}}",
-  "menu": [
-    {
-      "label": "straordinari",
-      "object": "overtime"
-    },
-    {
-      "label": "permessi",
-      "object": "time_off"
-    },
-    {
-      "label": "ferie",
-      "object": "vacations"
-    },
-    {
-      "label": "check di un mese",
-      "object": "vacations"
-    }
-  ],
+  "menu": {
+    "main": [
+      {
+        "label": "log today",
+        "object": "overtime"
+      },
+      {
+        "label": "resume",
+        "object": "time_off"
+      },
+      {
+        "label": "exit"
+      }
+    ],
+    "write": {
+    "question": "What kind of variations are you having today?",
+    "choices": [
+      {
+        "label": "straordinari",
+        "object": "overtime"
+      },
+      {
+        "label": "permessi",
+        "object": "time_off"
+      },
+      {
+        "label": "ferie",
+        "object": "vacations"
+      },
+      {
+        "label": "malattia",
+        "object": "sick_day"
+      },
+      {
+        "label": "indietro"
+      }
+    ]},
+    "read": [
+      {
+        "label": "straordinari",
+        "object": "overtime"
+      },
+      {
+        "label": "permessi",
+        "object": "time_off"
+      },
+      {
+        "label": "ferie",
+        "object": "vacations"
+      },
+      {
+        "label": "check di un mese",
+        "object": "vacations"
+      },
+      {
+        "label": "indietro"
+      }
+    ]
+  },
   "italian_months": [
     "gennaio",
     "febbraio",

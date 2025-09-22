@@ -2,9 +2,6 @@ import os
 import json
 import csv
 import datetime
-from utils.date import DateUtils
-from utils.csv import CsvUtils
-
 
 class PathUtils:
     @staticmethod
@@ -37,29 +34,30 @@ class PathUtils:
 
     @staticmethod
     def month(short_month_name):
-        month_file = os.path.join(PathUtils.get_data_path(), DateUtils.today().strftime("%Y"), f"{short_month_name}.csv")
+        month_file = os.path.join(PathUtils.get_data_path(), datetime.datetime.today().strftime("%Y"), f"{short_month_name}.csv")
         return month_file
 
-class CreateFileUtils:
+class IoUtils:
     class Blueprint:
          def __init__(self, path, nodes):
             self.path = path
             self.nodes = nodes
 
     class initialize:
+        #initializes a new year JSON file
         @staticmethod
         def year():
-            blueprint = CreateFileUtils.Blueprint(
+            # getting the blueprint file in order to get the right fields
+            blueprint = IoUtils.Blueprint(
                 path = os.path.join(PathUtils.get_blueprint_folder_path(), f"{os.environ['YEAR_BLUEPRINT_FILENAME']}.json"),
                 nodes = None
                 )
-            
+            # opening the file
             with open(blueprint.path, "r") as f:
                 blueprint.nodes = json.load(f)
                 f.close()
-            json_filepath = PathUtils.year(DateUtils.today().strftime("%Y"))
-            
-                   
+            json_filepath = PathUtils.year(datetime.datetime.today().strftime("%Y"))
+                  
             with open(json_filepath, "r") as f:
                 data = json.load(f)
                 if not data:
@@ -76,30 +74,35 @@ class CreateFileUtils:
                             obj[new_month] = merged
                         json.dump(obj, f, indent=4)
                     
-        def month():
+        def day():
             class Csv:
              def __init__(self, path, columns):
                 self.path = path
                 self.columns = columns
             
-            blueprint = CreateFileUtils.Blueprint(
-                path =  os.path.join(PathUtils.get_blueprint_folder_path(), f"{os.environ['MONTH_BLUEPRINT_FILENAME']}.json"),
-                nodes = None
-            )
+            blueprint = IoUtils.Blueprint(
+                 path =  os.path.join(PathUtils.get_blueprint_folder_path(), f"{os.environ['MONTH_BLUEPRINT_FILENAME']}.json"),
+                 nodes = None
+             )
             
+                        
             with open(blueprint.path, "r") as f:
-                blueprint.nodes = json.load(f)
-                f.close()
+                 blueprint.nodes = json.load(f)
+                 f.close()
                 
-            file_path = f"{PathUtils.month(DateUtils.today().strftime("%B"))}"
+            file_path = f"{PathUtils.month(datetime.datetime.today().strftime("%B"))}"
         
             csv_obj = Csv(file_path,blueprint.nodes[os.environ['MONTH_CSV_COLUMNS']])
-                        
+            
+            csv_columns = os.environ['CSV_COLUMNS'].split(',')
+            
             if not os.path.exists(file_path):
-                CsvUtils.header.add(csv_obj.path, csv_obj.columns)
+                CsvUtils.header.add(file_path, csv_columns)
             
             with open(file_path, newline='') as f:
-                spamreader = csv.reader(f, delimiter=',', quotechar='|')
-                last_row_date = list(spamreader)[-1][0]
-                if last_row_date != datetime.date.today().isoformat():
-                    CsvUtils.row.add(csv_obj.path, csv_obj.columns)            
+                 last_row = list(csv.reader(f, delimiter=',', quotechar='|'))[-1]
+                 if last_row[0] != datetime.date.today().isoformat() and os.environ['ONLINE_MODE'] == "1":
+                    CsvUtils.row.add_default(file_path)
+                    print("New row")
+                               
+ 

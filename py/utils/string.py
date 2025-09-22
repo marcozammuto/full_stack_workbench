@@ -1,14 +1,12 @@
-def sanitize_input(allowed_inputs):
+def sanitize_input(node):
     x = input()
-    try:
-        x = int(x) - 1 
-    except ValueError:
-        raise ("Inserisci un numero") 
-    if x in allowed_inputs:
-        return x
+    x = int(x) - 1
+    max_length = len(node) - 1
+    if x > max_length:
+        raise ValueError("Questo numero è troppo grande")
     else:
-        raise IndexError("Opzione non valida")
 
+        return x
 
 def capitalize_string(string):
     return f"{string[0].capitalize()}{string[1 : len(string)]}"

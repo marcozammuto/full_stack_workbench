@@ -1,12 +1,11 @@
 {
   "columns": {
-    "day": { "default": null },
-    "hours_variation": { "default": 0 },
+    "date": { "default": null },
+    "extra_hours": { "default": 0 },
     "variation_type": { "default": "=" },
     "start": { "default": "9:00" },
-    "finish": { "default": "18:00" },
-    "lunch_break_skipped": { "default": false },
-    "national_holiday": { "default": false },
+    "stop": { "default": "18:00" },
+    "is_national_holiday": { "default": false },
     "notes": { "default": null }
   }
 }
