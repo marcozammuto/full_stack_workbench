@@ -8,10 +8,7 @@ public class DayLogModel {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "status_id", nullable = false)
     private DayStatusModel status;
-
 }

@@ -3,9 +3,6 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="day_status")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class DayStatusModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,4 +10,10 @@ public class DayStatusModel {
 
     @Column(nullable=false)
     private String name;
+
+    public DayStatusModel(){}
+    public DayStatusModel(Long id, String name){
+        this.id = id;
+        this.name = name;
+    }
 }

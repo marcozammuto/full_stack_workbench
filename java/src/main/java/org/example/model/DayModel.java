@@ -2,13 +2,8 @@ package org.example.model;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
-import lombok.*;
-
 @Entity
 @Table(name = "day")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class DayModel {
 
     @Id
@@ -21,4 +16,12 @@ public class DayModel {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "status_id", nullable = false)
     private DayStatusModel status;
+
+    public DayModel(){};
+
+   public DayModel(Long id, LocalDate date, DayStatusModel status){
+       this.id = id;
+       this.date = date;
+       this.status = status;
+    }
 }
