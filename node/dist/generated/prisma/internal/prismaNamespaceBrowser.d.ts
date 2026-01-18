@@ -1,0 +1,82 @@
+import * as runtime from "@prisma/client/runtime/index-browser";
+export type * from '../models.js';
+export type * from './prismaNamespace.js';
+export declare const Decimal: typeof runtime.Decimal;
+export declare const NullTypes: {
+    DbNull: (new (secret: never) => typeof runtime.DbNull);
+    JsonNull: (new (secret: never) => typeof runtime.JsonNull);
+    AnyNull: (new (secret: never) => typeof runtime.AnyNull);
+};
+/**
+ * Helper for filtering JSON entries that have `null` on the database (empty on the db)
+ *
+ * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+ */
+export declare const DbNull: import("@prisma/client-runtime-utils").DbNullClass;
+/**
+ * Helper for filtering JSON entries that have JSON `null` values (not empty on the db)
+ *
+ * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+ */
+export declare const JsonNull: import("@prisma/client-runtime-utils").JsonNullClass;
+/**
+ * Helper for filtering JSON entries that are `Prisma.DbNull` or `Prisma.JsonNull`
+ *
+ * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+ */
+export declare const AnyNull: import("@prisma/client-runtime-utils").AnyNullClass;
+export declare const ModelName: {
+    readonly User: "User";
+    readonly PasswordRecovery: "PasswordRecovery";
+    readonly DayModifier: "DayModifier";
+    readonly Day: "Day";
+};
+export type ModelName = (typeof ModelName)[keyof typeof ModelName];
+export declare const TransactionIsolationLevel: {
+    readonly ReadUncommitted: "ReadUncommitted";
+    readonly ReadCommitted: "ReadCommitted";
+    readonly RepeatableRead: "RepeatableRead";
+    readonly Serializable: "Serializable";
+};
+export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel];
+export declare const UserScalarFieldEnum: {
+    readonly id: "id";
+    readonly code: "code";
+    readonly email: "email";
+    readonly hash: "hash";
+    readonly active: "active";
+};
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum];
+export declare const PasswordRecoveryScalarFieldEnum: {
+    readonly id: "id";
+    readonly token: "token";
+    readonly expiresAt: "expiresAt";
+    readonly userId: "userId";
+};
+export type PasswordRecoveryScalarFieldEnum = (typeof PasswordRecoveryScalarFieldEnum)[keyof typeof PasswordRecoveryScalarFieldEnum];
+export declare const DayModifierScalarFieldEnum: {
+    readonly id: "id";
+    readonly name: "name";
+};
+export type DayModifierScalarFieldEnum = (typeof DayModifierScalarFieldEnum)[keyof typeof DayModifierScalarFieldEnum];
+export declare const DayScalarFieldEnum: {
+    readonly id: "id";
+    readonly date: "date";
+    readonly createdAt: "createdAt";
+    readonly isWorkingDay: "isWorkingDay";
+    readonly notes: "notes";
+    readonly dayModifierId: "dayModifierId";
+    readonly workedHours: "workedHours";
+    readonly userId: "userId";
+};
+export type DayScalarFieldEnum = (typeof DayScalarFieldEnum)[keyof typeof DayScalarFieldEnum];
+export declare const SortOrder: {
+    readonly asc: "asc";
+    readonly desc: "desc";
+};
+export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder];
+export declare const QueryMode: {
+    readonly default: "default";
+    readonly insensitive: "insensitive";
+};
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode];

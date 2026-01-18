@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  code String @unique
+  email String @unique
+  hash String 
+  days Day[]
+  active Boolean @default(false)
+  passwordRecoveries PasswordRecovery[]
+}
+
+model PasswordRecovery {
+  id Int @id @default(autoincrement())
+  token String
+  expiresAt DateTime
+  userId Int @unique
+  user User @relation(fields: [userId], references:[id])
+}
+
+model DayModifier {
+  id Int @id @default(autoincrement())
+  name String
+  days Day[]
+}
+
+model Day {
+  id Int @id @default(autoincrement())
+  date DateTime
+  createdAt DateTime @default(now())
+  isWorkingDay Boolean
+  notes String
+  dayModifierId Int
+  dayModifier DayModifier @relation(fields: [dayModifierId], references: [id])
+  workedHours Int
+  userId Int
+  user User @relation(fields: [userId], references:[id])
+}
+
+

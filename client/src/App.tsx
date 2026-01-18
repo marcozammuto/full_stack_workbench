@@ -1,11 +1,11 @@
 import "./App.css";
-import BackendSwitch from "./components/features/BackendSwitch";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <>
       <div>
-        <BackendSwitch />
+        <Navbar />
       </div>
     </>
   );
