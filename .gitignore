@@ -58,3 +58,7 @@ build/
 # ========================
 # Se vuoi versionare i CSV tienili, altrimenti ignora:
 # data/*.csv
+
+node/dist
+node/node_modules
+node/prisma/generated/prisma
