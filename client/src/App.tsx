@@ -1,7 +1,9 @@
 import "./App.css";
 import Navbar from "./components/Navbar";
 
-function App() {
+console.log(.env.VITE_NODE_ENDPOINT);
+
+const App = () => {
   return (
     <>
       <div>
@@ -9,6 +11,6 @@ function App() {
       </div>
     </>
   );
-}
+};
 
 export default App;

@@ -62,3 +62,6 @@ build/
 node/dist
 node/node_modules
 node/prisma/generated/prisma
+
+
+.env
