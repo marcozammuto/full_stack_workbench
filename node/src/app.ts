@@ -14,7 +14,8 @@ app.use(express.json());
 app.use(cookieParser());
 // routes
 app.use("/auth", routeDispatcher.authRouter);
-app.use("/day", routeDispatcher.dayRouter)
+app.use("/day", routeDispatcher.dayRouter);
+app.use("/lookup", routeDispatcher.lookupRouter);
 
 // general error handler
 app.use(errorHandler);

@@ -39,13 +39,14 @@ model DayModifier {
 
 model Day {
   id Int @id @default(autoincrement())
-  date DateTime
+  date DateTime @db.Date
   createdAt DateTime @default(now())
   isWorkingDay Boolean
   notes String
   dayModifierId Int
   dayModifier DayModifier @relation(fields: [dayModifierId], references: [id])
-  workedHours Int
+  startedAt Int
+  endedAt Int
   userId Int
   user User @relation(fields: [userId], references:[id])
 }

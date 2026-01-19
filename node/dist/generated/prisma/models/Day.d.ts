@@ -15,13 +15,15 @@ export type AggregateDay = {
 export type DayAvgAggregateOutputType = {
     id: number | null;
     dayModifierId: number | null;
-    workedHours: number | null;
+    startedAt: number | null;
+    endedAt: number | null;
     userId: number | null;
 };
 export type DaySumAggregateOutputType = {
     id: number | null;
     dayModifierId: number | null;
-    workedHours: number | null;
+    startedAt: number | null;
+    endedAt: number | null;
     userId: number | null;
 };
 export type DayMinAggregateOutputType = {
@@ -31,7 +33,8 @@ export type DayMinAggregateOutputType = {
     isWorkingDay: boolean | null;
     notes: string | null;
     dayModifierId: number | null;
-    workedHours: number | null;
+    startedAt: number | null;
+    endedAt: number | null;
     userId: number | null;
 };
 export type DayMaxAggregateOutputType = {
@@ -41,7 +44,8 @@ export type DayMaxAggregateOutputType = {
     isWorkingDay: boolean | null;
     notes: string | null;
     dayModifierId: number | null;
-    workedHours: number | null;
+    startedAt: number | null;
+    endedAt: number | null;
     userId: number | null;
 };
 export type DayCountAggregateOutputType = {
@@ -51,20 +55,23 @@ export type DayCountAggregateOutputType = {
     isWorkingDay: number;
     notes: number;
     dayModifierId: number;
-    workedHours: number;
+    startedAt: number;
+    endedAt: number;
     userId: number;
     _all: number;
 };
 export type DayAvgAggregateInputType = {
     id?: true;
     dayModifierId?: true;
-    workedHours?: true;
+    startedAt?: true;
+    endedAt?: true;
     userId?: true;
 };
 export type DaySumAggregateInputType = {
     id?: true;
     dayModifierId?: true;
-    workedHours?: true;
+    startedAt?: true;
+    endedAt?: true;
     userId?: true;
 };
 export type DayMinAggregateInputType = {
@@ -74,7 +81,8 @@ export type DayMinAggregateInputType = {
     isWorkingDay?: true;
     notes?: true;
     dayModifierId?: true;
-    workedHours?: true;
+    startedAt?: true;
+    endedAt?: true;
     userId?: true;
 };
 export type DayMaxAggregateInputType = {
@@ -84,7 +92,8 @@ export type DayMaxAggregateInputType = {
     isWorkingDay?: true;
     notes?: true;
     dayModifierId?: true;
-    workedHours?: true;
+    startedAt?: true;
+    endedAt?: true;
     userId?: true;
 };
 export type DayCountAggregateInputType = {
@@ -94,7 +103,8 @@ export type DayCountAggregateInputType = {
     isWorkingDay?: true;
     notes?: true;
     dayModifierId?: true;
-    workedHours?: true;
+    startedAt?: true;
+    endedAt?: true;
     userId?: true;
     _all?: true;
 };
@@ -181,7 +191,8 @@ export type DayGroupByOutputType = {
     isWorkingDay: boolean;
     notes: string;
     dayModifierId: number;
-    workedHours: number;
+    startedAt: number;
+    endedAt: number;
     userId: number;
     _count: DayCountAggregateOutputType | null;
     _avg: DayAvgAggregateOutputType | null;
@@ -202,7 +213,8 @@ export type DayWhereInput = {
     isWorkingDay?: Prisma.BoolFilter<"Day"> | boolean;
     notes?: Prisma.StringFilter<"Day"> | string;
     dayModifierId?: Prisma.IntFilter<"Day"> | number;
-    workedHours?: Prisma.IntFilter<"Day"> | number;
+    startedAt?: Prisma.IntFilter<"Day"> | number;
+    endedAt?: Prisma.IntFilter<"Day"> | number;
     userId?: Prisma.IntFilter<"Day"> | number;
     dayModifier?: Prisma.XOR<Prisma.DayModifierScalarRelationFilter, Prisma.DayModifierWhereInput>;
     user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
@@ -214,7 +226,8 @@ export type DayOrderByWithRelationInput = {
     isWorkingDay?: Prisma.SortOrder;
     notes?: Prisma.SortOrder;
     dayModifierId?: Prisma.SortOrder;
-    workedHours?: Prisma.SortOrder;
+    startedAt?: Prisma.SortOrder;
+    endedAt?: Prisma.SortOrder;
     userId?: Prisma.SortOrder;
     dayModifier?: Prisma.DayModifierOrderByWithRelationInput;
     user?: Prisma.UserOrderByWithRelationInput;
@@ -229,7 +242,8 @@ export type DayWhereUniqueInput = Prisma.AtLeast<{
     isWorkingDay?: Prisma.BoolFilter<"Day"> | boolean;
     notes?: Prisma.StringFilter<"Day"> | string;
     dayModifierId?: Prisma.IntFilter<"Day"> | number;
-    workedHours?: Prisma.IntFilter<"Day"> | number;
+    startedAt?: Prisma.IntFilter<"Day"> | number;
+    endedAt?: Prisma.IntFilter<"Day"> | number;
     userId?: Prisma.IntFilter<"Day"> | number;
     dayModifier?: Prisma.XOR<Prisma.DayModifierScalarRelationFilter, Prisma.DayModifierWhereInput>;
     user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
@@ -241,7 +255,8 @@ export type DayOrderByWithAggregationInput = {
     isWorkingDay?: Prisma.SortOrder;
     notes?: Prisma.SortOrder;
     dayModifierId?: Prisma.SortOrder;
-    workedHours?: Prisma.SortOrder;
+    startedAt?: Prisma.SortOrder;
+    endedAt?: Prisma.SortOrder;
     userId?: Prisma.SortOrder;
     _count?: Prisma.DayCountOrderByAggregateInput;
     _avg?: Prisma.DayAvgOrderByAggregateInput;
@@ -259,7 +274,8 @@ export type DayScalarWhereWithAggregatesInput = {
     isWorkingDay?: Prisma.BoolWithAggregatesFilter<"Day"> | boolean;
     notes?: Prisma.StringWithAggregatesFilter<"Day"> | string;
     dayModifierId?: Prisma.IntWithAggregatesFilter<"Day"> | number;
-    workedHours?: Prisma.IntWithAggregatesFilter<"Day"> | number;
+    startedAt?: Prisma.IntWithAggregatesFilter<"Day"> | number;
+    endedAt?: Prisma.IntWithAggregatesFilter<"Day"> | number;
     userId?: Prisma.IntWithAggregatesFilter<"Day"> | number;
 };
 export type DayCreateInput = {
@@ -267,7 +283,8 @@ export type DayCreateInput = {
     createdAt?: Date | string;
     isWorkingDay: boolean;
     notes: string;
-    workedHours: number;
+    startedAt: number;
+    endedAt: number;
     dayModifier: Prisma.DayModifierCreateNestedOneWithoutDaysInput;
     user: Prisma.UserCreateNestedOneWithoutDaysInput;
 };
@@ -278,7 +295,8 @@ export type DayUncheckedCreateInput = {
     isWorkingDay: boolean;
     notes: string;
     dayModifierId: number;
-    workedHours: number;
+    startedAt: number;
+    endedAt: number;
     userId: number;
 };
 export type DayUpdateInput = {
@@ -286,7 +304,8 @@ export type DayUpdateInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     isWorkingDay?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     notes?: Prisma.StringFieldUpdateOperationsInput | string;
-    workedHours?: Prisma.IntFieldUpdateOperationsInput | number;
+    startedAt?: Prisma.IntFieldUpdateOperationsInput | number;
+    endedAt?: Prisma.IntFieldUpdateOperationsInput | number;
     dayModifier?: Prisma.DayModifierUpdateOneRequiredWithoutDaysNestedInput;
     user?: Prisma.UserUpdateOneRequiredWithoutDaysNestedInput;
 };
@@ -297,7 +316,8 @@ export type DayUncheckedUpdateInput = {
     isWorkingDay?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     notes?: Prisma.StringFieldUpdateOperationsInput | string;
     dayModifierId?: Prisma.IntFieldUpdateOperationsInput | number;
-    workedHours?: Prisma.IntFieldUpdateOperationsInput | number;
+    startedAt?: Prisma.IntFieldUpdateOperationsInput | number;
+    endedAt?: Prisma.IntFieldUpdateOperationsInput | number;
     userId?: Prisma.IntFieldUpdateOperationsInput | number;
 };
 export type DayCreateManyInput = {
@@ -307,7 +327,8 @@ export type DayCreateManyInput = {
     isWorkingDay: boolean;
     notes: string;
     dayModifierId: number;
-    workedHours: number;
+    startedAt: number;
+    endedAt: number;
     userId: number;
 };
 export type DayUpdateManyMutationInput = {
@@ -315,7 +336,8 @@ export type DayUpdateManyMutationInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     isWorkingDay?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     notes?: Prisma.StringFieldUpdateOperationsInput | string;
-    workedHours?: Prisma.IntFieldUpdateOperationsInput | number;
+    startedAt?: Prisma.IntFieldUpdateOperationsInput | number;
+    endedAt?: Prisma.IntFieldUpdateOperationsInput | number;
 };
 export type DayUncheckedUpdateManyInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
@@ -324,7 +346,8 @@ export type DayUncheckedUpdateManyInput = {
     isWorkingDay?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     notes?: Prisma.StringFieldUpdateOperationsInput | string;
     dayModifierId?: Prisma.IntFieldUpdateOperationsInput | number;
-    workedHours?: Prisma.IntFieldUpdateOperationsInput | number;
+    startedAt?: Prisma.IntFieldUpdateOperationsInput | number;
+    endedAt?: Prisma.IntFieldUpdateOperationsInput | number;
     userId?: Prisma.IntFieldUpdateOperationsInput | number;
 };
 export type DayListRelationFilter = {
@@ -342,13 +365,15 @@ export type DayCountOrderByAggregateInput = {
     isWorkingDay?: Prisma.SortOrder;
     notes?: Prisma.SortOrder;
     dayModifierId?: Prisma.SortOrder;
-    workedHours?: Prisma.SortOrder;
+    startedAt?: Prisma.SortOrder;
+    endedAt?: Prisma.SortOrder;
     userId?: Prisma.SortOrder;
 };
 export type DayAvgOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     dayModifierId?: Prisma.SortOrder;
-    workedHours?: Prisma.SortOrder;
+    startedAt?: Prisma.SortOrder;
+    endedAt?: Prisma.SortOrder;
     userId?: Prisma.SortOrder;
 };
 export type DayMaxOrderByAggregateInput = {
@@ -358,7 +383,8 @@ export type DayMaxOrderByAggregateInput = {
     isWorkingDay?: Prisma.SortOrder;
     notes?: Prisma.SortOrder;
     dayModifierId?: Prisma.SortOrder;
-    workedHours?: Prisma.SortOrder;
+    startedAt?: Prisma.SortOrder;
+    endedAt?: Prisma.SortOrder;
     userId?: Prisma.SortOrder;
 };
 export type DayMinOrderByAggregateInput = {
@@ -368,13 +394,15 @@ export type DayMinOrderByAggregateInput = {
     isWorkingDay?: Prisma.SortOrder;
     notes?: Prisma.SortOrder;
     dayModifierId?: Prisma.SortOrder;
-    workedHours?: Prisma.SortOrder;
+    startedAt?: Prisma.SortOrder;
+    endedAt?: Prisma.SortOrder;
     userId?: Prisma.SortOrder;
 };
 export type DaySumOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     dayModifierId?: Prisma.SortOrder;
-    workedHours?: Prisma.SortOrder;
+    startedAt?: Prisma.SortOrder;
+    endedAt?: Prisma.SortOrder;
     userId?: Prisma.SortOrder;
 };
 export type DayCreateNestedManyWithoutUserInput = {
@@ -458,7 +486,8 @@ export type DayCreateWithoutUserInput = {
     createdAt?: Date | string;
     isWorkingDay: boolean;
     notes: string;
-    workedHours: number;
+    startedAt: number;
+    endedAt: number;
     dayModifier: Prisma.DayModifierCreateNestedOneWithoutDaysInput;
 };
 export type DayUncheckedCreateWithoutUserInput = {
@@ -468,7 +497,8 @@ export type DayUncheckedCreateWithoutUserInput = {
     isWorkingDay: boolean;
     notes: string;
     dayModifierId: number;
-    workedHours: number;
+    startedAt: number;
+    endedAt: number;
 };
 export type DayCreateOrConnectWithoutUserInput = {
     where: Prisma.DayWhereUniqueInput;
@@ -501,7 +531,8 @@ export type DayScalarWhereInput = {
     isWorkingDay?: Prisma.BoolFilter<"Day"> | boolean;
     notes?: Prisma.StringFilter<"Day"> | string;
     dayModifierId?: Prisma.IntFilter<"Day"> | number;
-    workedHours?: Prisma.IntFilter<"Day"> | number;
+    startedAt?: Prisma.IntFilter<"Day"> | number;
+    endedAt?: Prisma.IntFilter<"Day"> | number;
     userId?: Prisma.IntFilter<"Day"> | number;
 };
 export type DayCreateWithoutDayModifierInput = {
@@ -509,7 +540,8 @@ export type DayCreateWithoutDayModifierInput = {
     createdAt?: Date | string;
     isWorkingDay: boolean;
     notes: string;
-    workedHours: number;
+    startedAt: number;
+    endedAt: number;
     user: Prisma.UserCreateNestedOneWithoutDaysInput;
 };
 export type DayUncheckedCreateWithoutDayModifierInput = {
@@ -518,7 +550,8 @@ export type DayUncheckedCreateWithoutDayModifierInput = {
     createdAt?: Date | string;
     isWorkingDay: boolean;
     notes: string;
-    workedHours: number;
+    startedAt: number;
+    endedAt: number;
     userId: number;
 };
 export type DayCreateOrConnectWithoutDayModifierInput = {
@@ -549,14 +582,16 @@ export type DayCreateManyUserInput = {
     isWorkingDay: boolean;
     notes: string;
     dayModifierId: number;
-    workedHours: number;
+    startedAt: number;
+    endedAt: number;
 };
 export type DayUpdateWithoutUserInput = {
     date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     isWorkingDay?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     notes?: Prisma.StringFieldUpdateOperationsInput | string;
-    workedHours?: Prisma.IntFieldUpdateOperationsInput | number;
+    startedAt?: Prisma.IntFieldUpdateOperationsInput | number;
+    endedAt?: Prisma.IntFieldUpdateOperationsInput | number;
     dayModifier?: Prisma.DayModifierUpdateOneRequiredWithoutDaysNestedInput;
 };
 export type DayUncheckedUpdateWithoutUserInput = {
@@ -566,7 +601,8 @@ export type DayUncheckedUpdateWithoutUserInput = {
     isWorkingDay?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     notes?: Prisma.StringFieldUpdateOperationsInput | string;
     dayModifierId?: Prisma.IntFieldUpdateOperationsInput | number;
-    workedHours?: Prisma.IntFieldUpdateOperationsInput | number;
+    startedAt?: Prisma.IntFieldUpdateOperationsInput | number;
+    endedAt?: Prisma.IntFieldUpdateOperationsInput | number;
 };
 export type DayUncheckedUpdateManyWithoutUserInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
@@ -575,7 +611,8 @@ export type DayUncheckedUpdateManyWithoutUserInput = {
     isWorkingDay?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     notes?: Prisma.StringFieldUpdateOperationsInput | string;
     dayModifierId?: Prisma.IntFieldUpdateOperationsInput | number;
-    workedHours?: Prisma.IntFieldUpdateOperationsInput | number;
+    startedAt?: Prisma.IntFieldUpdateOperationsInput | number;
+    endedAt?: Prisma.IntFieldUpdateOperationsInput | number;
 };
 export type DayCreateManyDayModifierInput = {
     id?: number;
@@ -583,7 +620,8 @@ export type DayCreateManyDayModifierInput = {
     createdAt?: Date | string;
     isWorkingDay: boolean;
     notes: string;
-    workedHours: number;
+    startedAt: number;
+    endedAt: number;
     userId: number;
 };
 export type DayUpdateWithoutDayModifierInput = {
@@ -591,7 +629,8 @@ export type DayUpdateWithoutDayModifierInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     isWorkingDay?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     notes?: Prisma.StringFieldUpdateOperationsInput | string;
-    workedHours?: Prisma.IntFieldUpdateOperationsInput | number;
+    startedAt?: Prisma.IntFieldUpdateOperationsInput | number;
+    endedAt?: Prisma.IntFieldUpdateOperationsInput | number;
     user?: Prisma.UserUpdateOneRequiredWithoutDaysNestedInput;
 };
 export type DayUncheckedUpdateWithoutDayModifierInput = {
@@ -600,7 +639,8 @@ export type DayUncheckedUpdateWithoutDayModifierInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     isWorkingDay?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     notes?: Prisma.StringFieldUpdateOperationsInput | string;
-    workedHours?: Prisma.IntFieldUpdateOperationsInput | number;
+    startedAt?: Prisma.IntFieldUpdateOperationsInput | number;
+    endedAt?: Prisma.IntFieldUpdateOperationsInput | number;
     userId?: Prisma.IntFieldUpdateOperationsInput | number;
 };
 export type DayUncheckedUpdateManyWithoutDayModifierInput = {
@@ -609,7 +649,8 @@ export type DayUncheckedUpdateManyWithoutDayModifierInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     isWorkingDay?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     notes?: Prisma.StringFieldUpdateOperationsInput | string;
-    workedHours?: Prisma.IntFieldUpdateOperationsInput | number;
+    startedAt?: Prisma.IntFieldUpdateOperationsInput | number;
+    endedAt?: Prisma.IntFieldUpdateOperationsInput | number;
     userId?: Prisma.IntFieldUpdateOperationsInput | number;
 };
 export type DaySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -619,7 +660,8 @@ export type DaySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
     isWorkingDay?: boolean;
     notes?: boolean;
     dayModifierId?: boolean;
-    workedHours?: boolean;
+    startedAt?: boolean;
+    endedAt?: boolean;
     userId?: boolean;
     dayModifier?: boolean | Prisma.DayModifierDefaultArgs<ExtArgs>;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
@@ -631,7 +673,8 @@ export type DaySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
     isWorkingDay?: boolean;
     notes?: boolean;
     dayModifierId?: boolean;
-    workedHours?: boolean;
+    startedAt?: boolean;
+    endedAt?: boolean;
     userId?: boolean;
     dayModifier?: boolean | Prisma.DayModifierDefaultArgs<ExtArgs>;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
@@ -643,7 +686,8 @@ export type DaySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
     isWorkingDay?: boolean;
     notes?: boolean;
     dayModifierId?: boolean;
-    workedHours?: boolean;
+    startedAt?: boolean;
+    endedAt?: boolean;
     userId?: boolean;
     dayModifier?: boolean | Prisma.DayModifierDefaultArgs<ExtArgs>;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
@@ -655,10 +699,11 @@ export type DaySelectScalar = {
     isWorkingDay?: boolean;
     notes?: boolean;
     dayModifierId?: boolean;
-    workedHours?: boolean;
+    startedAt?: boolean;
+    endedAt?: boolean;
     userId?: boolean;
 };
-export type DayOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "date" | "createdAt" | "isWorkingDay" | "notes" | "dayModifierId" | "workedHours" | "userId", ExtArgs["result"]["day"]>;
+export type DayOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "date" | "createdAt" | "isWorkingDay" | "notes" | "dayModifierId" | "startedAt" | "endedAt" | "userId", ExtArgs["result"]["day"]>;
 export type DayInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     dayModifier?: boolean | Prisma.DayModifierDefaultArgs<ExtArgs>;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
@@ -684,7 +729,8 @@ export type $DayPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
         isWorkingDay: boolean;
         notes: string;
         dayModifierId: number;
-        workedHours: number;
+        startedAt: number;
+        endedAt: number;
         userId: number;
     }, ExtArgs["result"]["day"]>;
     composites: {};
@@ -1048,7 +1094,8 @@ export interface DayFieldRefs {
     readonly isWorkingDay: Prisma.FieldRef<"Day", 'Boolean'>;
     readonly notes: Prisma.FieldRef<"Day", 'String'>;
     readonly dayModifierId: Prisma.FieldRef<"Day", 'Int'>;
-    readonly workedHours: Prisma.FieldRef<"Day", 'Int'>;
+    readonly startedAt: Prisma.FieldRef<"Day", 'Int'>;
+    readonly endedAt: Prisma.FieldRef<"Day", 'Int'>;
     readonly userId: Prisma.FieldRef<"Day", 'Int'>;
 }
 /**

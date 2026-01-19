@@ -608,7 +608,8 @@ export declare const DayScalarFieldEnum: {
     readonly isWorkingDay: "isWorkingDay";
     readonly notes: "notes";
     readonly dayModifierId: "dayModifierId";
-    readonly workedHours: "workedHours";
+    readonly startedAt: "startedAt";
+    readonly endedAt: "endedAt";
     readonly userId: "userId";
 };
 export type DayScalarFieldEnum = (typeof DayScalarFieldEnum)[keyof typeof DayScalarFieldEnum];

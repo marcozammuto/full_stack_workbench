@@ -80,6 +80,7 @@ export const handleGetMe = async (req, res, next) => {
         const user = await prisma.user.findUnique({
             where: {
                 email: String(req.user.email),
+                code: String(req.user.code),
             },
         });
         if (!user === null) {

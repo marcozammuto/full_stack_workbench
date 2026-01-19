@@ -1,26 +1,25 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-
 import { UserInterface } from "../types/entities.js";
 
 export const authenticateToken = (
   req: Request,
-  res: Response,
-  next: NextFunction
+  _res: Response,
+  next: NextFunction,
 ) => {
   const token = req.cookies.token.token;
 
-  if (!token) return res.status(401).json({ message: "Unauthorized" });
+  if (!token) return next({ status: 401, message: "Unauthorized" });
+  try {
+    const decoded = jwt.verify(token, String(process.env.JWT_SECRET_KEY));
 
-  jwt.verify(
-    token,
-    String(process.env.JWT_SECRET_KEY),
-    (err: Error, user: UserInterface) => {
-      if (err) {
-        return next(err);
-      }
-      req.user = user;
-      return next();
+    if (typeof decoded === "string" || !decoded.email || !decoded.code) {
+      return next({ status: 401, message: "Invalid token payload" });
     }
-  );
+
+    req.user = { email: decoded.email as string, code: decoded.code as string };
+    next();
+  } catch (err) {
+    next({ status: 401, message: "Invalid token" });
+  }
 };

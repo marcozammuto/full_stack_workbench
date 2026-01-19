@@ -1,11 +1,10 @@
-declare class Day {
+export declare class Day {
     date: Date;
     isWorkingDay: boolean;
     notes: string;
     dayModifierId: number;
     userId: number;
-    workedHours: number;
-    constructor(notes: string, dayModifierId: number, userId: number, workedHours: number);
+    startedAt: number;
+    endedAt: number;
+    constructor(notes: string, dayModifierId: number, userId: number, startedAt: number, endedAt: number);
 }
-export declare const getCurrentDay: (notes: string, dayModifierId: number, userId: number) => Day;
-export {};

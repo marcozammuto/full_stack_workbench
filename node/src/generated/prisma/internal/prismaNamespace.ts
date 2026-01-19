@@ -778,7 +778,8 @@ export const DayScalarFieldEnum = {
   isWorkingDay: 'isWorkingDay',
   notes: 'notes',
   dayModifierId: 'dayModifierId',
-  workedHours: 'workedHours',
+  startedAt: 'startedAt',
+  endedAt: 'endedAt',
   userId: 'userId'
 } as const
 

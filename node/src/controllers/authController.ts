@@ -16,7 +16,7 @@ import { Url, URL } from "node:url";
 export const handleSignup = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { email, password } = req.body;
@@ -54,7 +54,7 @@ export const handleSignup = async (
 export const handleLogin = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { email, password } = req.body;
@@ -96,7 +96,7 @@ export const handleLogin = async (
 export const handleLogout = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     res.clearCookie("token");
@@ -109,12 +109,13 @@ export const handleLogout = (
 export const handleGetMe = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const user = await prisma.user.findUnique({
       where: {
         email: String(req.user.email),
+        code: String(req.user.code),
       },
     });
 
@@ -130,7 +131,7 @@ export const handleGetMe = async (
 export const issuePasswordChangeToken = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { email } = req.body;
@@ -163,12 +164,12 @@ export const issuePasswordChangeToken = async (
       });
 
       const endpoint: URL = new URL(
-        "http://localhost:3000/auth/password/reset"
+        "http://localhost:3000/auth/password/reset",
       );
       endpoint.searchParams.append(QUERY_PARAMS.code, user.code);
       endpoint.searchParams.append(
         QUERY_PARAMS.token,
-        recoveryCredentials.plain
+        recoveryCredentials.plain,
       );
 
       res.status(200).json({
@@ -184,7 +185,7 @@ export const issuePasswordChangeToken = async (
 export const handlePasswordChange = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const { tkn, code } = req.query;
   const { password } = req.body;
@@ -215,7 +216,7 @@ export const handlePasswordChange = async (
 
   const isTokenMatch: boolean = await isMatch(
     String(tkn),
-    passwordRecoveryRequest.token
+    passwordRecoveryRequest.token,
   );
 
   if (isTokenMatch) {

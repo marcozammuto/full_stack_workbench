@@ -14,14 +14,12 @@ export const signToken = (user: {
     throw new Error("JWT setup variables are missing");
   }
 
-  const expiresIn = String(JWT_EXPIRES_IN) || "30m";
-
   const token = jwt.sign(
     { code: user.code, email: user.email },
     JWT_SECRET_KEY,
     {
-      expiresIn: expiresIn,
-    }
+      expiresIn: "30m",
+    },
   );
 
   return { user, token: token };
