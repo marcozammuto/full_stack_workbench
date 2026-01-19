@@ -1,8 +1,0 @@
-/**
- * 
- */
-/**
- * 
- */
-module working_hours {
-}

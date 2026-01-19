@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    // Current - keep these
+    "target": "ES2020",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+
+    // Add these
+    "skipLibCheck": true, // faster builds
+    "forceConsistentCasingInFileNames": true, // cross-platform safety
+    "resolveJsonModule": true, // import JSON files
+    "sourceMap": true, // debugging support
+    "declaration": true, // generate .d.ts files
+
+    // Stricter checks (optional but recommended)
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true // arrays/objects can be undefined
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

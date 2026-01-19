@@ -1,6 +1,0 @@
-day,weekday,extra_hours,variation_type,start,finish,lunch_break_skipped,notes
-15,5,0,=,9.00,18.00,False,
-16,6,0,=,9.00,18.00,False,
-16,6,0,=,9.00,18.00,False,
-16,6,0,=,9.00,18.00,False,
-,0,=,9:00,18:00,False,False,
