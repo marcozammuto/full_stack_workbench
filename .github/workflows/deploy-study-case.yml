@@ -46,17 +46,17 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
                set -e
                mkdir -p ~/working_hours/node
-               mkdir -p ~/working_hours/client/build
+               mkdir -p ~/working_hours/client/dist
           EOF
           scp -r -o StrictHostKeyChecking=no node/dist/* ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/working_hours/node/
-          scp -r -o StrictHostKeyChecking=no client/build/* ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/working_hours/client/build
+          scp -r -o StrictHostKeyChecking=no client/dist/* ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/working_hours/client/dist
 
           ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
                cd ~/working_hours/node
                pm2 restart working-hours-backend || pm2 start index.js --name working-hours-backend
 
                cd ~/working_hours/client
-               pm2 serve build 3000 --name working-hours-client --spa
+               pm2 serve dist 3000 --name working-hours-client --spa
 
                pm2 save
           EOF
