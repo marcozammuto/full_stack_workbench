@@ -1,13 +1,7 @@
 import { useTheme } from "../context/ThemeContext";
-import BackendSwitch from "./features/BackendSwitch";
 import { useUser } from "../context/UserContext";
-import { Link, useNavigate, useLocation } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-
-const navLinks = [
-  { name: "Documentation", path: "/documentation" },
-  { name: "Purpose", path: "/purpose" },
-];
 
 const projectLinks = [
   // { name: "Working Hours", path: "/dashboard" },
@@ -18,27 +12,10 @@ const Navbar = () => {
   const { isDarkMode, toggleTheme } = useTheme();
   const { user, logout } = useUser();
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const isActive = (path: string) => location.pathname === path;
 
   // Base button styles
   const buttonBase =
     "inline-flex items-center justify-center rounded-md text-sm font-medium transition-all duration-200 h-9 px-3";
-
-  // Nav link styles based on active state and theme
-  const getNavLinkStyles = (path: string) => {
-    const active = isActive(path);
-    if (isDarkMode) {
-      return active
-        ? "text-white bg-gray-700"
-        : "text-gray-300 hover:text-white hover:bg-gray-700";
-    }
-    return active
-      ? "text-blue-600 bg-blue-50"
-      : "text-gray-600 hover:text-blue-600 hover:bg-blue-50";
-  };
-
   return (
     <nav
       className={`sticky top-0 z-40 border-b backdrop-blur-sm ${
