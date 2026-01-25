@@ -1,0 +1,62 @@
+name: Deploy Study Case (Backend TS + React)
+
+on:
+  push:
+    branches:
+      - study-case
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install SSH client
+        run: sudo apt-get install -y openssh-client
+
+      - name: Start SSH agent
+        uses: webfactory/ssh-agent@v0.8.1
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+      # BE react build
+      - name: Build React frontend
+        run: |
+          cd client
+          npm install
+          npm run build
+
+      # BE node ts buold ===
+      - name: Install backend dependencies and build TS
+        run: |
+          cd node
+          npm install
+          npx tsc
+
+          # === Deploy ===
+      - name: Deploy to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+               set -e
+               mkdir -p ~/working_hours/node
+               mkdir -p ~/working_hours/client/build
+          EOF
+          scp -r -o StrictHostKeyChecking=no node/dist/* ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/working_hours/node/
+          scp -r -o StrictHostKeyChecking=no client/build/* ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/working_hours/client/build
+
+          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+               cd ~/working_hours/node
+               pm2 restart working-hours-backend || pm2 start index.js --name working-hours-backend
+
+               cd ~/working_hours/client
+               pm2 serve build 3000 --name working-hours-client --spa
+
+               pm2 save
+          EOF
