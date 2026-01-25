@@ -71,20 +71,6 @@ export const getBookings = async (nextCursor?: string | null) => {
   };
 };
 
-/**
- * Seeds the DynamoDB Bookings table with randomly generated booking records.
- *
- * Generates 500 booking entries with random dates throughout the current year, guest names,
- * channels (SoMe, Web, Phone), and payment status. Inserts records in batches
- * of 25 to comply with DynamoDB batch write limits.
- *
- * @async
- * @returns {Promise<{inserted: number}>} An object containing the total number of bookings inserted.
- *
- * @example
- * const result = await seedBookings();
- * console.log(`Successfully inserted ${result.inserted} bookings`);
- */
 export const seedBookings = async () => {
   const channels = ["SoMe", "Web", "Phone"];
 
@@ -95,10 +81,7 @@ export const seedBookings = async () => {
     const d = new Date(
       start.getTime() + Math.random() * (end.getTime() - start.getTime()),
     );
-    return (
-      d.toISOString().split("T")[0] ||
-      `${new Date().getFullYear().toString()}-01-01`
-    );
+    return d.toISOString().split("T")[0] || `${new Date().getFullYear().toString()}-01-01`;
   };
 
   const bookings = [];

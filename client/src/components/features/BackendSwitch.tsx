@@ -26,10 +26,7 @@ const BackendSwitch = () => {
           const OptIcon = opt.icon;
           return (
             <MenuItem key={opt.name}>
-              <button
-                onClick={() => setBackend(opt)}
-                className={styles.item}
-              >
+              <button onClick={() => setBackend(opt)} className={styles.item}>
                 <OptIcon className={styles.itemIcon} />
                 {opt.name}
               </button>

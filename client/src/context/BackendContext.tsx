@@ -30,6 +30,7 @@ export const BackendContextProvider = ({
 // hook
 export const useBackend = (): BackendContextInterface => {
   const context = useContext(BackendContext);
-  if (!context) throw new Error("useBackend must be used within BackendContextProvider");
+  if (!context)
+    throw new Error("useBackend must be used within BackendContextProvider");
   return context;
 };

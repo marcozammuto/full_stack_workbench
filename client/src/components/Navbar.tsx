@@ -56,13 +56,13 @@ const Navbar = () => {
                 isDarkMode ? "text-blue-400" : "text-blue-600"
               }`}
             >
-              Workbench
+              Study Case
             </span>
           </Link>
 
           {/* Nav Links */}
           <div className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
+            {/* {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
@@ -70,7 +70,7 @@ const Navbar = () => {
               >
                 {link.name}
               </Link>
-            ))}
+            ))} */}
 
             {/* Projects Dropdown */}
             <Menu as="div" className="relative">
@@ -128,15 +128,15 @@ const Navbar = () => {
           {/* Right side items */}
           <div className="flex items-center gap-2">
             {/* Backend Switch */}
-            <BackendSwitch />
+            {/* <BackendSwitch /> */}
 
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
               className={`${buttonBase} w-9 p-0 ${
                 isDarkMode
-                  ? "bg-gray-800 text-yellow-400 hover:text-yellow-300 hover:bg-gray-700"
-                  : "bg-white text-gray-500 hover:text-gray-700 hover:bg-gray-100"
+                  ? "bg-white text-gray-500 hover:text-gray-700 hover:bg-gray-100"
+                  : "bg-gray-800 text-yellow-400 hover:text-yellow-300 hover:bg-gray-700"
               }`}
               aria-label="Toggle theme"
             >

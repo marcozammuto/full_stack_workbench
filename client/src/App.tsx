@@ -13,7 +13,9 @@ const AppContent = () => {
   const { isDarkMode } = useTheme();
 
   return (
-    <div className={`min-h-screen flex flex-col ${isDarkMode ? "bg-gray-900" : "bg-gray-50"}`}>
+    <div
+      className={`min-h-screen flex flex-col ${isDarkMode ? "bg-gray-900" : "bg-gray-50"}`}
+    >
       <Navbar />
       <main className="flex-1 w-full">
         <Routes>
