@@ -9,7 +9,7 @@ import {
 import dotenv from "dotenv";
 import { splitDate } from "../utils/strings.js";
 
-dotenv.config({ path: "../../../.env" });
+dotenv.config();
 
 const client = new DynamoDBClient({
   region: String(process.env.AWS_REGION),
