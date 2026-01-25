@@ -1,56 +1,65 @@
-import { createContext, useState, useContext, useEffect } from "react";
-import axios from "axios";
+import { useState, createContext, useContext } from "react";
+import { useNavigate } from "react-router";
+import { useApi } from "../hooks/useApi";
 
 // interfaces
-// import { UserInterface } from "../types/interfaces";
-
-interface UserContextInterface {
-  user: string | null;
-  setUser: (user: string) => void;
-  isLoading: boolean;
+interface userInterface {
+  email: string;
+  code: string;
 }
 
-const UserContext = createContext<UserContextInterface>({
-  user: null,
-  setUser: () => {},
-  isLoading: false,
-});
+interface UserContextInterface {
+  user: userInterface | null;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => void;
+}
 
-export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
+// provider
+const UserContext = createContext<UserContextInterface | null>(null);
+
+export const UserContextProvider = ({
   children,
+}: {
+  children: React.ReactNode;
 }) => {
-  const [user, setUser] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [user, setUser] = useState<userInterface | null>(null);
+  const navigate = useNavigate();
+  const api = useApi();
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/auth/me")
-      .then((response) => {
-        if (response.data.auth) {
-          setUser(response.data.user);
-        }
-      })
-      .catch(() => setUser(null))
-      .finally(() => setIsLoading(false));
-  }, []);
+  const login = async (email: string, password: string): Promise<void> => {
+    if (!email || !password) {
+      throw new Error("Credentials uncomplete");
+    }
+    const response = await api.post(
+      `/auth/login`,
+      {
+        email,
+        password,
+      },
+      { withCredentials: true },
+    );
+    if (response.status === 200) {
+      setUser(response.data);
+      navigate("/bookings");
+    }
+  };
+
+  const logout = (): void => {
+    navigate("/");
+    setUser(null);
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser, isLoading }}>
-      {isLoading ? (
-        <div className="loading-spinner-container">
-          <div className="loading-spinner"></div>
-          <p style={{ color: "white", marginTop: "20px" }}></p>
-        </div>
-      ) : (
-        children
-      )}
+    <UserContext.Provider value={{ user, login, logout }}>
+      {children}
     </UserContext.Provider>
   );
 };
 
-export const useUser = () => {
+// hook / consumer
+export const useUser = (): UserContextInterface => {
   const context = useContext(UserContext);
-  if (!context) {
-    throw new Error("useAdminProvider must be used within a AdminProvider");
-  }
+  if (!context)
+    throw new Error("useUser must be used within UserContextProvider");
   return context;
 };

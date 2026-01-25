@@ -599,6 +599,7 @@ export type PasswordRecoveryScalarFieldEnum = (typeof PasswordRecoveryScalarFiel
 export declare const DayModifierScalarFieldEnum: {
     readonly id: "id";
     readonly name: "name";
+    readonly code: "code";
 };
 export type DayModifierScalarFieldEnum = (typeof DayModifierScalarFieldEnum)[keyof typeof DayModifierScalarFieldEnum];
 export declare const DayScalarFieldEnum: {

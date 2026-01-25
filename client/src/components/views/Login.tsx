@@ -1,24 +1,15 @@
-import React, { useState } from "react";
-import axios from "axios";
-import process from "process";
+import { useState } from "react";
+import { useUser } from "../../context/UserContext";
 
 const Login = () => {
-  const [feedback, setFeedback] = useState<string>("");
+  const { login } = useUser();
+  const [feedback] = useState<string>("");
   const [formData, setFormData] = useState<{ email: string; password: string }>(
     {
       email: "",
       password: "",
     },
   );
-
-  const handleLogin = () => {
-    if (!formData.email || !formData.password) {
-      setFeedback("Your form is uncomplete");
-    }
-    axios.post("http://localhost:3000/auth/login", formData).then((data) => {
-      console.log(data.data);
-    });
-  };
 
   return (
     <div className="w-full max-w-xs">
@@ -72,7 +63,7 @@ const Login = () => {
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
-            onClick={handleLogin}
+            onClick={() => login(formData.email, formData.password)}
           >
             Sign In
           </button>
