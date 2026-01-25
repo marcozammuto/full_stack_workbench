@@ -21,14 +21,17 @@ export type DayModifierSumAggregateOutputType = {
 export type DayModifierMinAggregateOutputType = {
     id: number | null;
     name: string | null;
+    code: string | null;
 };
 export type DayModifierMaxAggregateOutputType = {
     id: number | null;
     name: string | null;
+    code: string | null;
 };
 export type DayModifierCountAggregateOutputType = {
     id: number;
     name: number;
+    code: number;
     _all: number;
 };
 export type DayModifierAvgAggregateInputType = {
@@ -40,14 +43,17 @@ export type DayModifierSumAggregateInputType = {
 export type DayModifierMinAggregateInputType = {
     id?: true;
     name?: true;
+    code?: true;
 };
 export type DayModifierMaxAggregateInputType = {
     id?: true;
     name?: true;
+    code?: true;
 };
 export type DayModifierCountAggregateInputType = {
     id?: true;
     name?: true;
+    code?: true;
     _all?: true;
 };
 export type DayModifierAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -129,6 +135,7 @@ export type DayModifierGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 export type DayModifierGroupByOutputType = {
     id: number;
     name: string;
+    code: string;
     _count: DayModifierCountAggregateOutputType | null;
     _avg: DayModifierAvgAggregateOutputType | null;
     _sum: DayModifierSumAggregateOutputType | null;
@@ -144,24 +151,28 @@ export type DayModifierWhereInput = {
     NOT?: Prisma.DayModifierWhereInput | Prisma.DayModifierWhereInput[];
     id?: Prisma.IntFilter<"DayModifier"> | number;
     name?: Prisma.StringFilter<"DayModifier"> | string;
+    code?: Prisma.StringFilter<"DayModifier"> | string;
     days?: Prisma.DayListRelationFilter;
 };
 export type DayModifierOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
+    code?: Prisma.SortOrder;
     days?: Prisma.DayOrderByRelationAggregateInput;
 };
 export type DayModifierWhereUniqueInput = Prisma.AtLeast<{
     id?: number;
+    code?: string;
     AND?: Prisma.DayModifierWhereInput | Prisma.DayModifierWhereInput[];
     OR?: Prisma.DayModifierWhereInput[];
     NOT?: Prisma.DayModifierWhereInput | Prisma.DayModifierWhereInput[];
     name?: Prisma.StringFilter<"DayModifier"> | string;
     days?: Prisma.DayListRelationFilter;
-}, "id">;
+}, "id" | "code">;
 export type DayModifierOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
+    code?: Prisma.SortOrder;
     _count?: Prisma.DayModifierCountOrderByAggregateInput;
     _avg?: Prisma.DayModifierAvgOrderByAggregateInput;
     _max?: Prisma.DayModifierMaxOrderByAggregateInput;
@@ -174,39 +185,48 @@ export type DayModifierScalarWhereWithAggregatesInput = {
     NOT?: Prisma.DayModifierScalarWhereWithAggregatesInput | Prisma.DayModifierScalarWhereWithAggregatesInput[];
     id?: Prisma.IntWithAggregatesFilter<"DayModifier"> | number;
     name?: Prisma.StringWithAggregatesFilter<"DayModifier"> | string;
+    code?: Prisma.StringWithAggregatesFilter<"DayModifier"> | string;
 };
 export type DayModifierCreateInput = {
     name: string;
+    code: string;
     days?: Prisma.DayCreateNestedManyWithoutDayModifierInput;
 };
 export type DayModifierUncheckedCreateInput = {
     id?: number;
     name: string;
+    code: string;
     days?: Prisma.DayUncheckedCreateNestedManyWithoutDayModifierInput;
 };
 export type DayModifierUpdateInput = {
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    code?: Prisma.StringFieldUpdateOperationsInput | string;
     days?: Prisma.DayUpdateManyWithoutDayModifierNestedInput;
 };
 export type DayModifierUncheckedUpdateInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    code?: Prisma.StringFieldUpdateOperationsInput | string;
     days?: Prisma.DayUncheckedUpdateManyWithoutDayModifierNestedInput;
 };
 export type DayModifierCreateManyInput = {
     id?: number;
     name: string;
+    code: string;
 };
 export type DayModifierUpdateManyMutationInput = {
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    code?: Prisma.StringFieldUpdateOperationsInput | string;
 };
 export type DayModifierUncheckedUpdateManyInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    code?: Prisma.StringFieldUpdateOperationsInput | string;
 };
 export type DayModifierCountOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
+    code?: Prisma.SortOrder;
 };
 export type DayModifierAvgOrderByAggregateInput = {
     id?: Prisma.SortOrder;
@@ -214,10 +234,12 @@ export type DayModifierAvgOrderByAggregateInput = {
 export type DayModifierMaxOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
+    code?: Prisma.SortOrder;
 };
 export type DayModifierMinOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
+    code?: Prisma.SortOrder;
 };
 export type DayModifierSumOrderByAggregateInput = {
     id?: Prisma.SortOrder;
@@ -240,10 +262,12 @@ export type DayModifierUpdateOneRequiredWithoutDaysNestedInput = {
 };
 export type DayModifierCreateWithoutDaysInput = {
     name: string;
+    code: string;
 };
 export type DayModifierUncheckedCreateWithoutDaysInput = {
     id?: number;
     name: string;
+    code: string;
 };
 export type DayModifierCreateOrConnectWithoutDaysInput = {
     where: Prisma.DayModifierWhereUniqueInput;
@@ -260,10 +284,12 @@ export type DayModifierUpdateToOneWithWhereWithoutDaysInput = {
 };
 export type DayModifierUpdateWithoutDaysInput = {
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    code?: Prisma.StringFieldUpdateOperationsInput | string;
 };
 export type DayModifierUncheckedUpdateWithoutDaysInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
+    code?: Prisma.StringFieldUpdateOperationsInput | string;
 };
 /**
  * Count Type DayModifierCountOutputType
@@ -292,22 +318,26 @@ export type DayModifierCountOutputTypeCountDaysArgs<ExtArgs extends runtime.Type
 export type DayModifierSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     name?: boolean;
+    code?: boolean;
     days?: boolean | Prisma.DayModifier$daysArgs<ExtArgs>;
     _count?: boolean | Prisma.DayModifierCountOutputTypeDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["dayModifier"]>;
 export type DayModifierSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     name?: boolean;
+    code?: boolean;
 }, ExtArgs["result"]["dayModifier"]>;
 export type DayModifierSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     name?: boolean;
+    code?: boolean;
 }, ExtArgs["result"]["dayModifier"]>;
 export type DayModifierSelectScalar = {
     id?: boolean;
     name?: boolean;
+    code?: boolean;
 };
-export type DayModifierOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name", ExtArgs["result"]["dayModifier"]>;
+export type DayModifierOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "code", ExtArgs["result"]["dayModifier"]>;
 export type DayModifierInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     days?: boolean | Prisma.DayModifier$daysArgs<ExtArgs>;
     _count?: boolean | Prisma.DayModifierCountOutputTypeDefaultArgs<ExtArgs>;
@@ -322,6 +352,7 @@ export type $DayModifierPayload<ExtArgs extends runtime.Types.Extensions.Interna
     scalars: runtime.Types.Extensions.GetPayloadResult<{
         id: number;
         name: string;
+        code: string;
     }, ExtArgs["result"]["dayModifier"]>;
     composites: {};
 };
@@ -679,6 +710,7 @@ export interface Prisma__DayModifierClient<T, Null = never, ExtArgs extends runt
 export interface DayModifierFieldRefs {
     readonly id: Prisma.FieldRef<"DayModifier", 'Int'>;
     readonly name: Prisma.FieldRef<"DayModifier", 'String'>;
+    readonly code: Prisma.FieldRef<"DayModifier", 'String'>;
 }
 /**
  * DayModifier findUnique

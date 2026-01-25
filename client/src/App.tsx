@@ -1,23 +1,49 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router";
 import Navbar from "./components/Navbar";
-import Login from "./components/views/Login";
-import Documentation from "./components/views/Documentation";
-import Purpose from "./components/views/Purpose";
+
+import { ThemeContextProvider, useTheme } from "./context/ThemeContext";
+import { UserContextProvider } from "./context/UserContext";
+import * as Views from "./components/views/index";
+import { DayContextProvider } from "./context/DayContext";
+import { LookupContextProvider } from "./context/LookupContext";
+import { BackendContextProvider } from "./context/BackendContext";
+
+const AppContent = () => {
+  const { isDarkMode } = useTheme();
+
+  return (
+    <div
+      className={`min-h-screen flex flex-col ${isDarkMode ? "bg-gray-900" : "bg-gray-50"}`}
+    >
+      <Navbar />
+      <main className="flex-1 w-full">
+        <Routes>
+          <Route path="/" element={<Views.Login />} />
+          <Route path="/documentation" element={<Views.Documentation />} />
+          <Route path="/purpose" element={<Views.Purpose />} />
+          <Route path="/dashboard" element={<Views.Dashboard />} />
+          <Route path="/bookings" element={<Views.Bookings />} />
+        </Routes>
+      </main>
+    </div>
+  );
+};
 
 const App = () => {
   return (
     <BrowserRouter>
-      <div className="min-h-screen flex flex-col">
-        <Navbar />
-        <main className="max-w-4xl mx-auto p-4">
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/documentation" element={<Documentation />} />
-            <Route path="/purpose" element={<Purpose />} />
-          </Routes>
-        </main>
-      </div>
+      <BackendContextProvider>
+        <ThemeContextProvider>
+          <UserContextProvider>
+            <LookupContextProvider>
+              <DayContextProvider>
+                <AppContent />
+              </DayContextProvider>
+            </LookupContextProvider>
+          </UserContextProvider>
+        </ThemeContextProvider>
+      </BackendContextProvider>
     </BrowserRouter>
   );
 };

@@ -1,23 +1,20 @@
 import { NextFunction, Response, Request } from "express";
-import prisma from "../db/db.js";
-import { RESPONSE_MESSAGES } from "../types/constants.js";
+import { getAllDayModifiers, getTodayHoliday } from "../services/dayService.js";
 
 export const getAllLookupData = async (
   req: Request,
   res: Response,
   _next: NextFunction,
 ) => {
-  const dayModifier = await prisma.dayModifier.findMany();
-
-  if (dayModifier === null) {
-    return res
-      .status(404)
-      .json({ message: RESPONSE_MESSAGES.ERROR_LOOKUP_NOT_FOUND });
-  }
+  const [dayModifiers, holiday] = await Promise.all([
+    getAllDayModifiers(),
+    getTodayHoliday(),
+  ]);
 
   return res.status(200).json({
     data: {
-      dayModifier,
+      dayModifiers,
+      holiday,
     },
   });
 };

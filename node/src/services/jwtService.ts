@@ -1,4 +1,3 @@
-import { NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
 export const signToken = (user: {

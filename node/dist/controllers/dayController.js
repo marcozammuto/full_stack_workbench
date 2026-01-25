@@ -2,6 +2,7 @@ import prisma from "../db/db.js";
 import { Day } from "../services/dayService.js";
 import { RESPONSE_MESSAGES } from "../types/constants.js";
 import { splitDate } from "../utils/strings.js";
+import { toDayDto } from "../dto/dayDto.js";
 export const getAllDays = async (req, res, _next) => {
     const user = await prisma.user.findUnique({
         where: {
@@ -22,7 +23,7 @@ export const getAllDays = async (req, res, _next) => {
         return res.status(200).json({ message: RESPONSE_MESSAGES.DAY_EMPTY });
     }
     else {
-        return res.status(200).json({ data: days });
+        return res.status(200).json({ data: days.map(toDayDto) });
     }
 };
 export const createDay = async (req, res, next) => {
@@ -46,10 +47,24 @@ export const createDay = async (req, res, next) => {
     if (existingDay !== null &&
         splitDate(existingDay.date) === splitDate(new Date())) {
         return res
-            .status(403)
+            .status(200)
             .json({ message: RESPONSE_MESSAGES.DAY_ALREADY_UPDATED });
     }
-    const day = new Day("", 1, user.id, 9, 18);
+    const { startedAt, endedAt, dayModifierCode, notes } = req.body;
+    const dayModifierId = await prisma.dayModifier.findUnique({
+        select: {
+            id: true,
+        },
+        where: {
+            code: dayModifierCode,
+        },
+    });
+    if (dayModifierId === null) {
+        return res.status(400).json({
+            message: RESPONSE_MESSAGES.DAY_MODIFIER_NOT_FOUND,
+        });
+    }
+    const day = new Day(notes, dayModifierId.id, user.id, startedAt, endedAt);
     await prisma.day.create({ data: day });
     return res.status(200).json({
         day: day,

@@ -1,6 +1,7 @@
 export const FALLBACK_SERVER_PORT = 3000;
 export var RESPONSE_MESSAGES;
 (function (RESPONSE_MESSAGES) {
+    RESPONSE_MESSAGES["DAY_MODIFIER_NOT_FOUND"] = "Invalid day modifier code";
     RESPONSE_MESSAGES["DAY_ALREADY_UPDATED"] = "Your calendar is already updated";
     RESPONSE_MESSAGES["DAY_SUCCESS"] = "Calendar updated";
     RESPONSE_MESSAGES["DAY_EMPTY"] = "There are not registered days yet";
@@ -27,4 +28,60 @@ export var QUERY_PARAMS;
     QUERY_PARAMS["code"] = "code";
     QUERY_PARAMS["token"] = "tkn";
 })(QUERY_PARAMS || (QUERY_PARAMS = {}));
+export var FILE_ENUM;
+(function (FILE_ENUM) {
+    FILE_ENUM["LOOKUP_DAY_MODIFIER"] = "dayModifiers.json";
+})(FILE_ENUM || (FILE_ENUM = {}));
+export const guestNames = [
+    "John Doe",
+    "Marius Red",
+    "Aravid Krishanwamy",
+    "Lucia Bellini",
+    "Luca Verdi",
+    "Francesco San",
+    "Giulia Bosco",
+    "Paolo Petitto",
+    "Sara Gialli",
+    "Carlo Palermo",
+    "Marco Bianchi",
+    "Elena Rossi",
+    "Andrea Conti",
+    "Valentina Moretti",
+    "Matteo Ferrara",
+    "Alessia Romano",
+    "Davide Ricci",
+    "Chiara Lombardi",
+    "Stefano Greco",
+    "Federica Marchetti",
+    "Simone De Luca",
+    "Martina Esposito",
+    "Giorgio Rinaldi",
+    "Beatrice Puglisi",
+    "Nicola Barbieri",
+    "Ilaria Fontana",
+    "Alberto Mancini",
+    "Francesca Vitale",
+    "Roberto Caruso",
+    "Silvia Parisi",
+    "Thomas Walker",
+    "Emily Carter",
+    "Michael Brown",
+    "Sophia Miller",
+    "Daniel Wilson",
+    "Olivia Harris",
+    "James Turner",
+    "Isabella Moore",
+    "Benjamin Scott",
+    "Charlotte Adams",
+    "Pierre Dubois",
+    "Claire Martin",
+    "Lucas Bernard",
+    "Camille Laurent",
+    "Miguel Alvarez",
+    "Ana Rodriguez",
+    "Jan Kowalski",
+    "Katarzyna Nowak",
+    "Nikos Papadopoulos",
+    "Eleni Georgiou",
+];
 //# sourceMappingURL=constants.js.map

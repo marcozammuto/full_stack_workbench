@@ -1,15 +1,16 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { UserInterface } from "../types/entities.js";
 
 export const authenticateToken = (
   req: Request,
   _res: Response,
   next: NextFunction,
 ) => {
-  const token = req.cookies.token.token;
+  const token = req.cookies.token.token || req.cookies.token;
 
-  if (!token) return next({ status: 401, message: "Unauthorized" });
+  if (!token || token === undefined)
+    return next({ status: 401, message: "Unauthorized" });
+
   try {
     const decoded = jwt.verify(token, String(process.env.JWT_SECRET_KEY));
 

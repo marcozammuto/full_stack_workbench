@@ -1,5 +1,6 @@
 export declare const FALLBACK_SERVER_PORT: number;
 export declare enum RESPONSE_MESSAGES {
+    DAY_MODIFIER_NOT_FOUND = "Invalid day modifier code",
     DAY_ALREADY_UPDATED = "Your calendar is already updated",
     DAY_SUCCESS = "Calendar updated",
     DAY_EMPTY = "There are not registered days yet",
@@ -24,3 +25,7 @@ export declare enum QUERY_PARAMS {
     code = "code",
     token = "tkn"
 }
+export declare enum FILE_ENUM {
+    LOOKUP_DAY_MODIFIER = "dayModifiers.json"
+}
+export declare const guestNames: string[];

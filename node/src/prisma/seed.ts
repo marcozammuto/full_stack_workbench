@@ -3,6 +3,7 @@ import { PrismaClient } from "../generated/prisma/client.js";
 import { readFile } from "fs/promises"; // ← Add /promises
 import path from "path";
 import dotenv from "dotenv";
+import { FILE_ENUM } from "../types/constants.js";
 
 dotenv.config({ path: path.resolve("..", ".env") });
 
@@ -12,7 +13,11 @@ const adapter = new PrismaPg({
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  const lookupPath = path.resolve("..", "lookup", "dayModifiers.json");
+  const lookupPath = path.resolve(
+    "..",
+    "lookup",
+    FILE_ENUM.LOOKUP_DAY_MODIFIER,
+  );
 
   const data = await readFile(lookupPath, "utf8");
   const lookupData = JSON.parse(data);

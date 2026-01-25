@@ -68,7 +68,8 @@ export const PasswordRecoveryScalarFieldEnum = {
 };
 export const DayModifierScalarFieldEnum = {
     id: 'id',
-    name: 'name'
+    name: 'name',
+    code: 'code'
 };
 export const DayScalarFieldEnum = {
     id: 'id',

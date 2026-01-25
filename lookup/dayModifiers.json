@@ -1,9 +1,0 @@
-[
-{ "name": "standard" },
-{ "name": "overtime" },
-{ "name": "time-off" },
-{ "name": "sick-day" },
-{ "name": "vacation" },
-{ "name": "weekend" },
-{ "name": "national holiday" }
-]

@@ -96,7 +96,8 @@ export type PasswordRecoveryScalarFieldEnum = (typeof PasswordRecoveryScalarFiel
 
 export const DayModifierScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  name: 'name',
+  code: 'code'
 } as const
 
 export type DayModifierScalarFieldEnum = (typeof DayModifierScalarFieldEnum)[keyof typeof DayModifierScalarFieldEnum]
