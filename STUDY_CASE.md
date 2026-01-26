@@ -1,5 +1,13 @@
 # Study Case: Full Stack Developer
 
+## Live Demo & Source Code
+
+- **Live Application:** [http://15.161.188.174](http://15.161.188.174)
+- Credentials: arianna.z@ruralis.com - "JUF1f<a3p?"
+- **GitHub Repository:** [github.com/marcozammuto/full_stack_workbench/](https://github.com/marcozammuto/full_stack_workbench/tree/study-case)
+
+---
+
 ## Section 1 - System Design & Problem Solving
 
 ### Problem Analysis

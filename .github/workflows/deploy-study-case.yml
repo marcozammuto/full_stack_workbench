@@ -71,7 +71,9 @@ jobs:
           AWS_DYNAMO_DB_USER_ACCESS_ID=${{ secrets.AWS_DYNAMO_DB_USER_ACCESS_ID }}
           AWS_DYNAMO_DB_USER_ACCESS_SECRET_KEY=${{ secrets.AWS_DYNAMO_DB_USER_ACCESS_SECRET_KEY }}
           DATABASE_URL=${{ secrets.DATABASE_URL }}
-          JWT_SECRET=${{ secrets.JWT_SECRET }}
+          JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}
+          JWT_EXPIRES_IN=30m
+          NATIONAL_HOLIDAYS_API_HOST=https://openholidaysapi.org/PublicHolidays
           ENVFILE
 
                # Install production dependencies
