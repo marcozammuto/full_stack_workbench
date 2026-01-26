@@ -26,8 +26,10 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
-      # BE react build
+      # FE react build
       - name: Build React frontend
+        env:
+          VITE_NODE_ENDPOINT: http://${{ secrets.EC2_HOST }}:3001
         run: |
           cd client
           npm install
