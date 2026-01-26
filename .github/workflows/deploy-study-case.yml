@@ -29,7 +29,7 @@ jobs:
       # FE react build
       - name: Build React frontend
         env:
-          VITE_NODE_ENDPOINT: http://${{ secrets.EC2_HOST }}:3001
+          VITE_NODE_ENDPOINT: /api
         run: |
           cd client
           npm install
@@ -80,10 +80,36 @@ jobs:
                # Restart backend on port 3001
                pm2 restart working-hours-backend || pm2 start server.js --name working-hours-backend
 
-               # Restart frontend on port 3000
-               cd ~/working_hours/client
+               # Stop pm2 frontend (nginx will serve static files)
                pm2 delete working-hours-client 2>/dev/null || true
-               pm2 serve dist 3000 --name working-hours-client --spa
+
+               # Configure nginx
+               sudo tee /etc/nginx/sites-available/working-hours > /dev/null << 'NGINX'
+          server {
+              listen 80;
+              server_name _;
+
+              # Frontend - serve static files
+              location / {
+                  root /home/ubuntu/working_hours/client/dist;
+                  index index.html;
+                  try_files \$uri \$uri/ /index.html;
+              }
+
+              # Backend API proxy
+              location /api {
+                  rewrite ^/api/(.*) /\$1 break;
+                  proxy_pass http://localhost:3001;
+                  proxy_http_version 1.1;
+                  proxy_set_header Host \$host;
+                  proxy_set_header X-Real-IP \$remote_addr;
+              }
+          }
+          NGINX
+
+               sudo ln -sf /etc/nginx/sites-available/working-hours /etc/nginx/sites-enabled/
+               sudo rm -f /etc/nginx/sites-enabled/default
+               sudo nginx -t && sudo systemctl reload nginx
 
                pm2 save
           EOF
