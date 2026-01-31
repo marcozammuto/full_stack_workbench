@@ -3,13 +3,14 @@ import jwt from "jsonwebtoken";
 
 export const authenticateToken = (
   req: Request,
-  _res: Response,
+  res: Response,
   next: NextFunction,
 ) => {
-  const token = req.cookies.token.token || req.cookies.token;
+  const token = req.cookies.token.token;
 
-  if (!token || token === undefined)
-    return next({ status: 401, message: "Unauthorized" });
+  if (!token || token === undefined) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
 
   try {
     const decoded = jwt.verify(token, String(process.env.JWT_SECRET_KEY));

@@ -1,5 +1,7 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { guestNames } from "../types/constants.js";
+import dotenv from "dotenv";
+import path from "path";
 
 import {
   DynamoDBDocumentClient,
@@ -7,6 +9,10 @@ import {
   BatchWriteCommand,
 } from "@aws-sdk/lib-dynamodb";
 import { splitDate } from "../utils/strings.js";
+
+dotenv.config({
+  path: path.resolve("..", ".env"),
+});
 
 // Lazy initialization - client created on first use, after env vars are loaded
 let docClient: DynamoDBDocumentClient | null = null;
@@ -85,7 +91,10 @@ export const seedBookings = async () => {
     const d = new Date(
       start.getTime() + Math.random() * (end.getTime() - start.getTime()),
     );
-    return d.toISOString().split("T")[0] || `${new Date().getFullYear().toString()}-01-01`;
+    return (
+      d.toISOString().split("T")[0] ||
+      `${new Date().getFullYear().toString()}-01-01`
+    );
   };
 
   const bookings = [];

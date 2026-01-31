@@ -1,6 +1,7 @@
+import axios from "axios";
 import { useState, createContext, useContext } from "react";
 import { useNavigate } from "react-router";
-import { useApi } from "../hooks/useApi";
+import { useBackend } from "./BackendContext";
 
 // interfaces
 interface userInterface {
@@ -10,6 +11,7 @@ interface userInterface {
 
 interface UserContextInterface {
   user: userInterface | null;
+  setUser: (user: userInterface | null) => void;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
@@ -23,15 +25,15 @@ export const UserContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [user, setUser] = useState<userInterface | null>(null);
+  const { backend } = useBackend();
   const navigate = useNavigate();
-  const api = useApi();
 
   const login = async (email: string, password: string): Promise<void> => {
     if (!email || !password) {
       throw new Error("Credentials uncomplete");
     }
-    const response = await api.post(
-      `/auth/login`,
+    const response = await axios.post(
+      `${backend?.endpoint}/auth/login`,
       {
         email,
         password,
@@ -50,7 +52,7 @@ export const UserContextProvider = ({
   };
 
   return (
-    <UserContext.Provider value={{ user, login, logout }}>
+    <UserContext.Provider value={{ user, setUser, login, logout }}>
       {children}
     </UserContext.Provider>
   );

@@ -32,7 +32,7 @@ export const LookupContextProvider = ({
         })
         .catch((err) => console.error(err));
     }
-  }, [backend.endpoint, user]);
+  }, [backend?.endpoint]);
   return (
     <LookupContext.Provider value={{ lookup }}>
       {children}
@@ -43,6 +43,7 @@ export const LookupContextProvider = ({
 // custom hook
 export const useLookup = (): LookupContextInterface => {
   const context = useContext(LookupContext);
-  if (!context) throw new Error("useLookup must be used within LookupContextProvider");
+  if (!context)
+    throw new Error("useLookup must be used within LookupContextProvider");
   return context;
 };
