@@ -1,9 +1,0 @@
-[
-  { "code": "ST", "name": "standard" },
-  { "code": "OV", "name": "overtime" },
-  { "code": "TO", "name": "time-off" },
-  { "code": "SD", "name": "sick-day" },
-  { "code": "VA", "name": "vacation" },
-  { "code": "WE", "name": "weekend" },
-  { "code": "NH", "name": "national holiday" }
-]

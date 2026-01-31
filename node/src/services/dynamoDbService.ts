@@ -6,20 +6,24 @@ import {
   QueryCommand,
   BatchWriteCommand,
 } from "@aws-sdk/lib-dynamodb";
-import dotenv from "dotenv";
 import { splitDate } from "../utils/strings.js";
 
-dotenv.config({ path: "../../../.env" });
+// Lazy initialization - client created on first use, after env vars are loaded
+let docClient: DynamoDBDocumentClient | null = null;
 
-const client = new DynamoDBClient({
-  region: String(process.env.AWS_REGION),
-  credentials: {
-    accessKeyId: String(process.env.AWS_DYNAMO_DB_USER_ACCESS_ID),
-    secretAccessKey: String(process.env.AWS_DYNAMO_DB_USER_ACCESS_SECRET_KEY),
-  },
-});
-
-const docClient = DynamoDBDocumentClient.from(client);
+const getDocClient = () => {
+  if (!docClient) {
+    const client = new DynamoDBClient({
+      region: process.env.AWS_REGION,
+      credentials: {
+        accessKeyId: process.env.AWS_DYNAMO_DB_USER_ACCESS_ID!,
+        secretAccessKey: process.env.AWS_DYNAMO_DB_USER_ACCESS_SECRET_KEY!,
+      },
+    });
+    docClient = DynamoDBDocumentClient.from(client);
+  }
+  return docClient;
+};
 
 /**
  * Retrieves bookings for a property within a 7-day range (past and future).
@@ -61,7 +65,7 @@ export const getBookings = async (nextCursor?: string | null) => {
     Limit: 10,
     ExclusiveStartKey: nextCursor ? JSON.parse(nextCursor) : undefined,
   });
-  const response = await docClient.send(command);
+  const response = await getDocClient().send(command);
 
   return {
     data: response.Items,
@@ -111,7 +115,7 @@ export const seedBookings = async () => {
         })),
       },
     });
-    await docClient.send(command);
+    await getDocClient().send(command);
     inserted += batch.length;
     console.log(`Inserted ${inserted}/${bookings.length}`);
   }

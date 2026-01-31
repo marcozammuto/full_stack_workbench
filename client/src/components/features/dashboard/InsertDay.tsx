@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useLookup } from "../../../context/LookupContext";
+import { useTheme } from "../../../context/ThemeContext";
 import type { DayInterface, LookupItemInterface } from "../../../types/interfaces";
 import { useApi } from "../../../hooks/useApi";
 
 const InsertDay = () => {
   const { lookup } = useLookup();
+  const { isDarkMode } = useTheme();
   const today = new Date();
   const todayDate = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, "0")}-${today.getDate().toString()}`;
   const isWeekend = [0, 6].includes(today.getDay());
@@ -38,17 +40,37 @@ const InsertDay = () => {
       });
   };
 
+  const inputClasses = `appearance-none border-none w-full mr-3 py-1 px-2 leading-tight focus:outline-none ${
+    isDarkMode
+      ? "bg-gray-700 text-white placeholder-gray-400"
+      : "bg-transparent text-gray-700 placeholder-gray-500"
+  }`;
+
+  const labelClasses = `block text-sm mb-1 ${
+    isDarkMode ? "text-gray-300" : "text-gray-600"
+  }`;
+
+  const selectClasses = `appearance-none border-none w-full mr-3 py-1 px-2 leading-tight focus:outline-none ${
+    isDarkMode
+      ? "bg-gray-700 text-white"
+      : "bg-transparent text-gray-700"
+  }`;
+
   return (
-    <div className="w-full bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <div className={`w-full shadow-md rounded px-8 pt-6 pb-8 mb-4 ${
+      isDarkMode ? "bg-gray-800" : "bg-white"
+    }`}>
       <form className="w-full">
-        <div className="flex items-center border-b border-teal-500 py-2">
+        <div className={`flex items-center border-b py-2 ${
+          isDarkMode ? "border-teal-400" : "border-teal-500"
+        }`}>
           {/* date - disabled */}
           <div>
-            <label htmlFor="date" className="block text-sm text-gray-600 mb-1">
+            <label htmlFor="date" className={labelClasses}>
               Date
             </label>
             <input
-              className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+              className={inputClasses}
               id="date"
               type="date"
               aria-label="Date"
@@ -58,15 +80,12 @@ const InsertDay = () => {
           </div>
           {/* start time - disabled */}
           <div>
-            <label
-              htmlFor="startedAt"
-              className="block text-sm text-gray-600 mb-1"
-            >
+            <label htmlFor="startedAt" className={labelClasses}>
               Start
             </label>
             <input
               id="startedAt"
-              className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+              className={inputClasses}
               type="time"
               aria-label="Start"
               disabled={isWeekend}
@@ -81,15 +100,12 @@ const InsertDay = () => {
           </div>
           {/* end time */}
           <div>
-            <label
-              htmlFor="endedAt"
-              className="block text-sm text-gray-600 mb-1"
-            >
+            <label htmlFor="endedAt" className={labelClasses}>
               End
             </label>
             <input
               id="endedAt"
-              className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+              className={inputClasses}
               type="time"
               disabled={!isWeekend}
               aria-label="End"
@@ -104,15 +120,12 @@ const InsertDay = () => {
           </div>
           {lookup && lookup.dayModifier && (
             <div>
-              <label
-                htmlFor="dayModifier"
-                className="block text-sm text-gray-600 mb-1"
-              >
+              <label htmlFor="dayModifier" className={labelClasses}>
                 Variation
               </label>
               <select
                 id="dayModifier"
-                className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                className={selectClasses}
                 defaultValue={newDay.dayModifierCode}
               >
                 {lookup.dayModifier.map((dm: LookupItemInterface) => (
@@ -125,12 +138,12 @@ const InsertDay = () => {
           )}
           {/* notes */}
           <div>
-            <label htmlFor="notes" className="block text-sm text-gray-600 mb-1">
+            <label htmlFor="notes" className={labelClasses}>
               Notes
             </label>
             <input
               id="notes"
-              className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+              className={inputClasses}
               type="text"
               aria-label="Notes"
               placeholder="Notes"
@@ -152,7 +165,7 @@ const InsertDay = () => {
             Add
           </button>
         </div>
-        <p className="block text-black">{feedback}</p>
+        <p className={`block ${isDarkMode ? "text-gray-200" : "text-black"}`}>{feedback}</p>
       </form>
     </div>
   );

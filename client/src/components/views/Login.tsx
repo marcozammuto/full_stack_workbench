@@ -13,19 +13,28 @@ const Login = () => {
     },
   );
 
+  const inputClasses = `shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${
+    isDarkMode
+      ? "bg-gray-700 border-gray-600 text-white placeholder-gray-400"
+      : "bg-white border-gray-300 text-gray-700 placeholder-gray-500"
+  }`;
+
+  const labelClasses = `block text-sm font-bold mb-2 ${
+    isDarkMode ? "text-gray-200" : "text-gray-700"
+  }`;
+
   return (
     <div className="max-w-6xl flex justify-center mx-auto px-4 py-8">
       <div className="w-full max-w-xs">
         {feedback && <div className="mb-4">{feedback}</div>}
 
         <form
-          className={`bg-${isDarkMode ? "black" : "white"} shadow-md rounded px-8 pt-6 pb-8 mb-4`}
+          className={`shadow-md rounded px-8 pt-6 pb-8 mb-4 ${
+            isDarkMode ? "bg-gray-800" : "bg-white"
+          }`}
         >
           <div className="mb-4">
-            <label
-              className={`block text-gray-${isDarkMode ? "70" : "700"} text-sm font-bold mb-2`}
-              htmlFor="email"
-            >
+            <label className={labelClasses} htmlFor="email">
               Email
             </label>
             <input
@@ -35,21 +44,18 @@ const Login = () => {
                   password: formData.password,
                 });
               }}
-              className={`shadow appearance-none border rounded w-full py-2 px-3 text-${isDarkMode ? "white-700" : "gray-70"} leading-tight focus:outline-none focus:shadow-outline`}
+              className={inputClasses}
               id="email"
               type="email"
               placeholder="Email"
             />
           </div>
           <div className="mb-6">
-            <label
-              className={`block text-gray-${isDarkMode ? "70" : "700"} text-sm font-bold mb-2`}
-              htmlFor="password"
-            >
+            <label className={labelClasses} htmlFor="password">
               Password
             </label>
             <input
-              className={`shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-${isDarkMode ? "white-700" : "gray-70"} mb-3 leading-tight focus:outline-none focus:shadow-outline`}
+              className={`${inputClasses} mb-3`}
               id="password"
               type="password"
               placeholder="******************"
@@ -80,7 +86,7 @@ const Login = () => {
             </a>
           </div>
         </form>
-        <p className="text-center text-gray-500 text-xs">
+        <p className={`text-center text-xs ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
           &copy;{new Date().getFullYear()} Giuseppe Zammuto - All rights
           reserved.
         </p>
