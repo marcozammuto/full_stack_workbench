@@ -1,5 +1,10 @@
 import dotenv from "dotenv";
-dotenv.config();
+import fs from "fs";
+import path from "path";
+dotenv.config({
+  path: path.resolve("..", ".env"),
+});
+
 import app from "./app.js";
 
 app.listen(process.env.NODE_PORT, () => {

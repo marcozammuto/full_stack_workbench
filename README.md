@@ -1,6 +1,11 @@
-# Working Hours
+# Working Hours - Full Stack Workbench
 
-A full-stack application for managing working hours and bookings, built with multiple backend implementations.
+A full-stack application for managing working hours and bookings, demonstrating multiple backend implementations with a unified React frontend.
+
+## Live Demo
+
+- **Application:** [http://15.161.188.174](http://15.161.188.174)
+- **GitHub:** [github.com/marcozammuto/full_stack_workbench](https://github.com/marcozammuto/full_stack_workbench)
 
 ## Architecture
 
@@ -22,7 +27,7 @@ A full-stack application for managing working hours and bookings, built with mul
                         ▼
               ┌──────────────────┐
               │    PostgreSQL    │
-              │    (Supabase)    │
+              │   (Supabase)     │
               └──────────────────┘
                         │
               ┌──────────────────┐
@@ -36,49 +41,61 @@ A full-stack application for managing working hours and bookings, built with mul
 ### Frontend
 - **React 18** with TypeScript
 - **Vite** for build tooling
-- **Tailwind CSS** for styling
-- **React Context** for state management
+- **Tailwind CSS** with dark/light mode support
+- **React Context** for state management (Theme, User, Backend)
 - **Axios** for API calls
+- **HeadlessUI** for accessible components
 
 ### Backends
-| Backend | Framework | Port |
-|---------|-----------|------|
-| Node.js | Express 5 | 3000 |
-| Java | Spring Boot | 8080 |
-| Python | Flask | 3001 |
+
+| Backend | Framework | Port | Status |
+|---------|-----------|------|--------|
+| Node.js | Express 5 + Prisma | 3001 | Production |
+| Java | Spring Boot 3 | 8080 | Development |
+| Python | Flask | 5000 | Development |
 
 ### Databases
 - **PostgreSQL** (Supabase) - Users, Days, DayModifiers
 - **DynamoDB** - Bookings with cursor-based pagination
 
+### Infrastructure
+- **AWS EC2** (Ubuntu 24.04)
+- **Nginx** reverse proxy
+- **PM2** process manager
+- **GitHub Actions** CI/CD
+
 ## Features
 
-- Multi-backend architecture (switch between Node.js, Spring Boot, Flask)
-- Dark/Light mode theming
-- Working hours tracking
-- Booking management with DynamoDB pagination
-- JWT authentication
+- **Multi-backend architecture** - Switch between Node.js, Spring Boot, Flask from the UI
+- **Dark/Light mode** - Full theme support across all components
+- **Working hours tracking** - Log daily work hours with modifiers
+- **Booking management** - DynamoDB with cursor-based pagination
+- **JWT authentication** - Secure login with token refresh
+- **Holiday detection** - Automatic national holiday lookup
 
 ## Getting Started
 
 ### Prerequisites
 - Node.js 20+
 - npm or yarn
+- Java 17+ (for Spring Boot backend)
+- Python 3.10+ (for Flask backend)
 
 ### Installation
 
 ```bash
 # Clone the repository
-git clone <repository-url>
-cd working_hours
+git clone https://github.com/marcozammuto/full_stack_workbench.git
+cd full_stack_workbench
 
 # Install frontend dependencies
-cd client
-npm install
+cd client && npm install
 
-# Install backend dependencies (Node.js)
-cd ../node
-npm install
+# Install Node.js backend dependencies
+cd ../node && npm install
+
+# Generate Prisma client
+npx prisma generate --schema=src/prisma/schema.prisma
 ```
 
 ### Environment Variables
@@ -86,77 +103,146 @@ npm install
 Create a `.env` file in the root directory:
 
 ```env
-# Node.js Backend
+# Server Ports
 NODE_PORT=3000
+SPRING_PORT=8080
+FLASK_PORT=5000
 
-# Client
+# Frontend API Endpoints
 VITE_NODE_ENDPOINT=http://localhost:3000
 VITE_SPRING_ENDPOINT=http://localhost:8080
-VITE_FLASK_ENDPOINT=http://localhost:3001
+VITE_FLASK_ENDPOINT=http://localhost:5000
 
 # Database
-DATABASE_URL=your_postgresql_connection_string
+DATABASE_URL=postgresql://user:password@host:5432/database
 
-# JWT
+# JWT Authentication
 JWT_SECRET_KEY=your_secret_key
+JWT_EXPIRES_IN=30m
 
-# AWS (for DynamoDB)
+# AWS DynamoDB
 AWS_REGION=eu-south-1
 AWS_DYNAMO_DB_USER_ACCESS_ID=your_access_key
 AWS_DYNAMO_DB_USER_ACCESS_SECRET_KEY=your_secret_key
+
+# External APIs
+NATIONAL_HOLIDAYS_API_HOST=https://openholidaysapi.org/PublicHolidays
 ```
 
 ### Running Locally
 
 ```bash
-# Start the frontend
-cd client
-npm run dev
+# Terminal 1: Start frontend
+cd client && npm run dev
 
-# Start Node.js backend (in another terminal)
-cd node
-npm run dev
+# Terminal 2: Start Node.js backend
+cd node && npm run dev
+
+# Terminal 3 (optional): Start Spring Boot
+cd java && ./mvnw spring-boot:run
+
+# Terminal 4 (optional): Start Flask
+cd py && flask run
 ```
 
 ## Deployment
 
-The application is deployed to AWS EC2 using GitHub Actions.
-
 ### CI/CD Pipeline
 
 Push to `study-case` branch triggers automatic deployment:
-1. Builds React frontend with production API URL
-2. Compiles TypeScript backend
-3. Deploys to EC2 via SSH
-4. Configures nginx as reverse proxy
-5. Manages processes with PM2
 
-### Production URLs
-- **Frontend:** `http://<EC2_IP>/`
-- **API:** Proxied through `/api`
+1. **Build** - Compiles React frontend and TypeScript backend
+2. **Deploy** - Copies files to EC2 via SCP
+3. **Configure** - Sets up nginx and environment variables
+4. **Start** - Manages processes with PM2
+
+### Production Architecture
+
+```
+Internet → Nginx (port 80)
+              ├── /        → Static files (React)
+              └── /api/*   → Proxy to Node.js (port 3001)
+```
+
+### Manual Deployment
+
+```bash
+# SSH into EC2
+ssh -i key.pem ubuntu@<EC2_IP>
+
+# Update and restart
+cd ~/working_hours/node
+git pull
+npm ci --omit=dev
+pm2 restart working-hours-backend
+```
 
 ## Project Structure
 
 ```
 working_hours/
-├── client/                 # React frontend
+├── client/                    # React frontend
 │   ├── src/
-│   │   ├── components/    # UI components
-│   │   ├── context/       # React contexts
-│   │   ├── hooks/         # Custom hooks
-│   │   └── types/         # TypeScript types
+│   │   ├── components/       # UI components
+│   │   │   ├── features/    # Feature components
+│   │   │   └── views/       # Page components
+│   │   ├── context/         # React contexts
+│   │   ├── hooks/           # Custom hooks
+│   │   ├── styles/          # Shared styles
+│   │   └── types/           # TypeScript interfaces
 │   └── vite.config.ts
-├── node/                   # Node.js backend
+├── node/                      # Node.js/Express backend
 │   ├── src/
-│   │   ├── controllers/
-│   │   ├── routes/
-│   │   ├── services/
-│   │   └── prisma/        # Prisma schema
+│   │   ├── controllers/     # Route handlers
+│   │   ├── middlewares/     # Auth, error handling
+│   │   ├── routes/          # API routes
+│   │   ├── services/        # Business logic
+│   │   └── prisma/          # Database schema
 │   └── package.json
-├── java/                   # Spring Boot backend
-├── py/                     # Flask backend
-└── .github/workflows/      # CI/CD pipelines
+├── java/                      # Spring Boot backend (WIP)
+│   ├── src/main/java/
+│   └── pom.xml
+├── py/                        # Flask backend
+│   ├── app.py
+│   └── requirements.txt
+├── .github/workflows/         # CI/CD pipelines
+└── .env                       # Environment variables
 ```
+
+## API Endpoints
+
+### Authentication
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/auth/login` | User login |
+| POST | `/auth/register` | User registration |
+| POST | `/auth/logout` | User logout |
+
+### Days
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/day` | Get all days for user |
+| POST | `/day` | Create new day entry |
+| PUT | `/day/:id` | Update day entry |
+
+### Bookings (DynamoDB)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/booking` | Get paginated bookings |
+| POST | `/booking/seed` | Seed sample data |
+
+### Lookup
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/lookup` | Get day modifiers and holidays |
+
+## Study Case
+
+This project includes a technical study case demonstrating DynamoDB pagination optimization. See [STUDY_CASE.md](./STUDY_CASE.md) for the full analysis.
+
+## Author
+
+Giuseppe Zammuto
 
 ## License
 

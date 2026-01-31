@@ -66,9 +66,6 @@ const Login = () => {
                 });
               }}
             />
-            <p className="text-red-500 text-xs italic">
-              Please choose a password.
-            </p>
           </div>
           <div className="flex items-center justify-between">
             <button
@@ -86,7 +83,9 @@ const Login = () => {
             </a>
           </div>
         </form>
-        <p className={`text-center text-xs ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
+        <p
+          className={`text-center text-xs ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
+        >
           &copy;{new Date().getFullYear()} Giuseppe Zammuto - All rights
           reserved.
         </p>

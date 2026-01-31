@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useDays } from "../../context/DayContext";
-import DayTable from "../features/dashboard/DayTable";
-import InsertDay from "../features/dashboard/InsertDay";
+import DayTable from "../features/working-hours/DayTable";
+import InsertDay from "../features/working-hours/InsertDay";
 import { useApi } from "../../hooks/useApi";
 
-const Dashboard = () => {
+const WorkingHours = () => {
   const api = useApi();
   const { days, setDays } = useDays();
   useEffect(() => {
@@ -28,4 +28,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default WorkingHours;

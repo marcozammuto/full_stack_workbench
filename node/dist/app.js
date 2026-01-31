@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 // middlewares
 import { errorHandler } from "./middlewares/errorHandler.js";
+import { authenticateToken } from "./middlewares/jwtMiddleware.js";
 const app = express();
 // settings
 app.use(cors({
@@ -17,9 +18,9 @@ app.use(express.json());
 app.use(cookieParser());
 // routes
 app.use("/auth", routeDispatcher.authRouter);
-app.use("/day", routeDispatcher.dayRouter);
-app.use("/lookup", routeDispatcher.lookupRouter);
-app.use("/booking", routeDispatcher.bookingRouter);
+app.use("/day", authenticateToken, routeDispatcher.dayRouter);
+app.use("/lookup", authenticateToken, routeDispatcher.lookupRouter);
+app.use("/booking", authenticateToken, routeDispatcher.bookingRouter);
 // general error handler
 app.use(errorHandler);
 export default app;

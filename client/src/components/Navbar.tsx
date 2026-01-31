@@ -2,11 +2,7 @@ import { useTheme } from "../context/ThemeContext";
 import { useUser } from "../context/UserContext";
 import { Link, useNavigate } from "react-router";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-
-const projectLinks = [
-  // { name: "Working Hours", path: "/dashboard" },
-  { name: "Bookings", path: "/bookings" },
-];
+import { capitalizeString } from "../utils/strings";
 
 const Navbar = () => {
   const { isDarkMode, toggleTheme } = useTheme();
@@ -16,6 +12,17 @@ const Navbar = () => {
   // Base button styles
   const buttonBase =
     "inline-flex items-center justify-center rounded-md text-sm font-medium transition-all duration-200 h-9 px-3";
+
+  function getNavLinkStyles(path: string) {
+    const isActive = location.pathname === `/${path}`;
+    return isActive
+      ? isDarkMode
+        ? "bg-blue-900 text-blue-300"
+        : "bg-blue-100 text-blue-600"
+      : isDarkMode
+        ? "text-gray-300 hover:text-white hover:bg-gray-800"
+        : "text-gray-600 hover:text-blue-600 hover:bg-blue-50";
+  }
   return (
     <nav
       className={`sticky top-0 z-40 border-b backdrop-blur-sm ${
@@ -33,21 +40,21 @@ const Navbar = () => {
                 isDarkMode ? "text-blue-400" : "text-blue-600"
               }`}
             >
-              Study Case
+              {import.meta.env.VITE_APP_NAME}
             </span>
           </Link>
 
           {/* Nav Links */}
           <div className="hidden md:flex items-center gap-1">
-            {/* {navLinks.map((link) => (
+            {["documentation", "purpose"].map((link: string) => (
               <Link
-                key={link.path}
-                to={link.path}
-                className={`${buttonBase} ${getNavLinkStyles(link.path)}`}
+                key={link}
+                to={link}
+                className={`${buttonBase} ${getNavLinkStyles(link)}`}
               >
-                {link.name}
+                {capitalizeString(link)}
               </Link>
-            ))} */}
+            ))}
 
             {/* Projects Dropdown */}
             <Menu as="div" className="relative">
@@ -81,17 +88,17 @@ const Navbar = () => {
                     : "bg-white ring-1 ring-black/5"
                 }`}
               >
-                {projectLinks.map((link) => (
-                  <MenuItem key={link.path}>
+                {["working-hours", "bookings"].map((project) => (
+                  <MenuItem key={`${project}_project`}>
                     <Link
-                      to={link.path}
+                      to={`/${project}`}
                       className={`flex items-center gap-2 w-full px-4 py-2 text-sm ${
                         isDarkMode
                           ? "text-gray-300 data-[focus]:bg-gray-700 data-[focus]:text-white"
                           : "text-gray-700 data-[focus]:bg-blue-50 data-[focus]:text-blue-600"
                       }`}
                     >
-                      {link.name}
+                      {capitalizeString(project.replace(/(-|_)+/g, " "))}
                     </Link>
                   </MenuItem>
                 ))}

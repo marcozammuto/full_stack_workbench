@@ -6,9 +6,6 @@ import {
   seedAllBookings,
 } from "../controllers/bookingController.js";
 
-//middlewares
-import { authenticateToken } from "../middlewares/jwtMiddleware.js";
-
 // router
 const bookingRouter = express.Router();
 
