@@ -1,6 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { useApi } from "../../hooks/useApi";
-import { useTheme } from "../../context/ThemeContext";
+import { useTheme } from "../../context/index";
+import { TableHeading } from "../shared/Tables";
+import PageHeading from "../shared/PageHeading";
 
 interface BookingInterface {
   GuestName?: string;
@@ -60,26 +62,18 @@ const Bookings = () => {
   }, []);
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <>
       {/* Header */}
-      <div className="mb-6">
-        <h1
-          className={`text-2xl font-bold ${isDarkMode ? "text-white" : "text-gray-900"}`}
-        >
-          Bookings
-        </h1>
-        <p
-          className={`mt-1 text-sm ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
-        >
-          Manage your property bookings
-        </p>
-      </div>
+      <PageHeading
+        title="Bookings"
+        subtitle="Manage your property bookings with DynamoDb"
+      />
 
       {/* Table Card */}
       <div
         className={`rounded-lg shadow-md overflow-hidden ${
           isDarkMode ? "bg-gray-800" : "bg-white"
-        }`}
+        } ${isDarkMode ? "text-gray-50" : "text-gray-700"}`}
       >
         {loading && (
           <div
@@ -95,33 +89,16 @@ const Bookings = () => {
 
         <div className="overflow-x-auto">
           <table className="min-w-full">
-            <thead className={isDarkMode ? "bg-gray-700" : "bg-gray-50"}>
-              <tr>
-                {["Date", "Channel", "Guest", "Status", "Property"].map(
-                  (head) => (
-                    <th
-                      key={head}
-                      className={`px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider ${
-                        isDarkMode ? "text-gray-300" : "text-gray-600"
-                      }`}
-                    >
-                      {head}
-                    </th>
-                  ),
-                )}
-              </tr>
-            </thead>
+            <TableHeading
+              keys={["Date", "Channel", "Guest", "Status", "Property"]}
+            />
+
             <tbody
               className={`divide-y ${isDarkMode ? "divide-gray-700" : "divide-gray-200"}`}
             >
               {bookings.length === 0 && !loading ? (
                 <tr>
-                  <td
-                    colSpan={5}
-                    className={`px-6 py-8 text-center text-sm ${
-                      isDarkMode ? "text-gray-400" : "text-gray-500"
-                    }`}
-                  >
+                  <td colSpan={5} className={`px-6 py-8 text-center text-sm`}>
                     No bookings found
                   </td>
                 </tr>
@@ -133,27 +110,11 @@ const Bookings = () => {
                       isDarkMode ? "hover:bg-gray-700/50" : "hover:bg-gray-50"
                     }`}
                   >
-                    <td
-                      className={`px-6 py-4 text-sm font-medium ${
-                        isDarkMode ? "text-white" : "text-gray-900"
-                      }`}
-                    >
+                    <td className={`px-6 py-4 text-sm font-medium`}>
                       {b.BookingDateId.split("#")[0]}
                     </td>
-                    <td
-                      className={`px-6 py-4 text-sm ${
-                        isDarkMode ? "text-gray-300" : "text-gray-600"
-                      }`}
-                    >
-                      {b.Channel || "-"}
-                    </td>
-                    <td
-                      className={`px-6 py-4 text-sm ${
-                        isDarkMode ? "text-gray-300" : "text-gray-600"
-                      }`}
-                    >
-                      {b.GuestName || "-"}
-                    </td>
+                    <td>{b.Channel || "-"}</td>
+                    <td>{b.GuestName || "-"}</td>
                     <td className="px-6 py-4">
                       <span
                         className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-medium ${
@@ -165,13 +126,7 @@ const Bookings = () => {
                         {b.Paid ? "Paid" : "Unpaid"}
                       </span>
                     </td>
-                    <td
-                      className={`px-6 py-4 text-sm ${
-                        isDarkMode ? "text-gray-300" : "text-gray-600"
-                      }`}
-                    >
-                      {b.PropertyId}
-                    </td>
+                    <td>{b.PropertyId}</td>
                   </tr>
                 ))
               )}
@@ -218,7 +173,7 @@ const Bookings = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

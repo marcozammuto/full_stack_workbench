@@ -1,5 +1,21 @@
 import type { IconType } from "react-icons";
 
+export type ReducerAction = {
+  type: string;
+  key: string;
+  value: string;
+};
+
+export type InputType = "string" | "email" | "tel" | "number";
+
+export interface FieldInterface {
+  field: string;
+  placeholder: string;
+  label: string;
+  type?: InputType;
+  onChange: void;
+}
+
 export interface UserInterface {
   email: string;
   password: string;
