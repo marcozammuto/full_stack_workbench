@@ -1,5 +1,5 @@
 import React from "react";
-import { HistoryEntry } from "../../../hooks/useCalculator";
+import { type HistoryEntry } from "../../../hooks/useCalculator";
 import { useTheme } from "../../../context/index";
 
 interface HistoryProps {

@@ -5,7 +5,7 @@ import datetime
 
 from create_files.create_file_utils import CreateFileUtils
 from utils.string import sanitize_input
-from utils.io import IoUtils, PathUtils
+from utils.io import  PathUtils
 from utils.terminal import TerminalUtils
 
 from dotenv import load_dotenv

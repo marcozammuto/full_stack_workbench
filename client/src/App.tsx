@@ -28,6 +28,7 @@ const AppContent = () => {
             <Route element={<ProtectedRoutes />}>
               <Route path="/bookings" element={<Views.Bookings />} />
               <Route path="/calculator" element={<Views.Calculator />} />
+              <Route path="/counter" element={<Views.Counter />} />
               <Route path="/form" element={<Views.Form />} />
               <Route path="/todo-list" element={<Views.TodoList />} />
               <Route path="/working-hours" element={<Views.WorkingHours />} />

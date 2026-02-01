@@ -136,6 +136,7 @@ const Navbar = () => {
                   "bookings",
                   "form",
                   "calculator",
+                  "counter",
                   "todo-list",
                 ]
                   .sort((a: string, b: string) => a.localeCompare(b))

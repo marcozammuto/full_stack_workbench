@@ -6,8 +6,10 @@ import Bookings from "./Bookings";
 import Form from "./Form";
 import Calculator from "./Calculator";
 import TodoList from "./TodoList";
+import Counter from "./Counter";
 
 export {
+  Counter,
   Login,
   Documentation,
   Purpose,
