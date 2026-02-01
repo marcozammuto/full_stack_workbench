@@ -236,13 +236,137 @@ working_hours/
 |--------|----------|-------------|
 | GET | `/lookup` | Get day modifiers and holidays |
 
-## Study Case
-
-This project includes a technical study case demonstrating DynamoDB pagination optimization. See [STUDY_CASE.md](./STUDY_CASE.md) for the full analysis.
 
 ## Author
 
 Giuseppe Zammuto
+
+## License
+
+MIT
+
+
+
+# Scientific Calculator
+
+A modern, feature-rich scientific calculator built with React and TypeScript. This application provides both basic and advanced mathematical operations with a clean, responsive interface.
+
+## Features
+
+### Core Functionality
+
+- **Basic Operations**: Addition, subtraction, multiplication, division
+- **Scientific Functions**:
+  - Trigonometric: sin, cos, tan
+  - Logarithmic: ln (natural log), log (base 10)
+  - Other: square root, exponential, factorial, power
+- **Memory Functions**: MC, MR, M+, M-
+- **Utility Functions**: Percentage, sign toggle, backspace
+
+### User Experience
+
+- **Dual Mode**: Toggle between Basic and Scientific calculator views
+- **Theme Support**: Light and Dark mode with persistent storage
+- **Calculation History**: Track your last 50 calculations
+- **Keyboard Support**: Full keyboard navigation for efficient use
+- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile
+- **Angle Modes**: Switch between Degrees (DEG) and Radians (RAD)
+
+### Technical Highlights
+
+- **Type-Safe**: Built with TypeScript for robust code
+- **Safe Evaluation**: Custom expression parser (no eval())
+- **Custom Hooks**: Modular architecture with reusable hooks
+- **Modern UI**: CSS variables for theming, smooth animations
+- **Production Ready**: Optimized build with Vite
+
+## Tech Stack
+
+- **React 18** - UI library
+- **TypeScript** - Type safety
+- **Vite** - Build tool and dev server
+- **CSS3** - Styling with CSS variables
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v14 or higher)
+- npm or yarn
+
+### Installation
+
+1. Install dependencies
+
+```bash
+npm install
+```
+
+2. Start the development server
+
+```bash
+npm run dev
+```
+
+3. Open your browser and navigate to the printed local endpoint
+
+## Project Structure
+
+```
+src/
+├── Calculator/         # Main calculator component
+├── components/         # Reusable UI components
+│   ├── Button.tsx
+│   ├── Display.tsx
+│   └── History.tsx
+├── hooks/             # Custom React hooks
+│   ├── useCalculator.ts
+│   ├── useKeyboard.ts
+│   └── useTheme.ts
+├── styles/            # Component styles
+│   ├── Button.css
+│   ├── Display.css
+│   └── History.css
+├── utils/             # Utility functions
+│   └── calculator.ts
+├── App.tsx
+└── main.tsx
+```
+
+## Keyboard Shortcuts
+
+- **Numbers**: 0-9
+- **Operators**: +, -, \*, /
+- **Decimal**: . or ,
+- **Equals**: Enter or =
+- **Clear**: Escape or C
+- **Backspace**: Backspace
+- **Percentage**: %
+
+## Architecture Decisions
+
+### Custom Expression Parser
+
+Instead of using `eval()`, this calculator implements a safe expression parser using the Shunting Yard algorithm to convert infix notation to postfix, then evaluates the result. This prevents code injection vulnerabilities.
+
+### State Management
+
+The calculator uses React hooks for state management, with custom hooks separating concerns:
+
+- `useCalculator`: Core calculator logic
+- `useTheme`: Theme management and persistence
+- `useKeyboard`: Keyboard event handling
+
+### Component Architecture
+
+Components are modular and reusable, with clear separation between presentation and logic. Each component has its own CSS file for styling.
+
+## Browser Support
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
 
 ## License
 
