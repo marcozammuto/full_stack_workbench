@@ -3,6 +3,7 @@ import { Display, Button, History } from "../features/calculator/index";
 import { useCalculator } from "../../hooks/useCalculator";
 import { useKeyboard } from "../../hooks/useKeyboard";
 import { useTheme } from "../../context/index";
+import type { Operation } from "../../utils/calculator";
 
 const Calculator: React.FC = () => {
   const {
@@ -35,7 +36,7 @@ const Calculator: React.FC = () => {
 
   useKeyboard({
     onDigit: inputDigit,
-    onOperator: (op) => performOperation(op as any),
+    onOperator: (op) => performOperation(op as Operation),
     onEquals: calculate,
     onClear: clear,
     onBackspace: backspace,

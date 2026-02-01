@@ -17,14 +17,7 @@
     "url": "https://github.com/marcozammuto/working_hours/issues"
   },
   "homepage": "https://github.com/marcozammuto/working_hours#readme",
-  "dependencies": {
-    "concurrently": "^9.2.1",
-    "react-redux": "^9.2.0"
-  },
   "devDependencies": {
-    "@reduxjs/toolkit": "^2.11.2",
-    "@testing-library/jest-dom": "^6.9.1",
-    "@types/jest": "^30.0.0",
-    "@types/node": "^25.0.10"
+    "concurrently": "^9.2.1"
   }
 }
