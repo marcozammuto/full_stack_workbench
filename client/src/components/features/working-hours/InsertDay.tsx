@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { useLookup } from "../../../context/LookupContext";
-import { useTheme } from "../../../context/ThemeContext";
-import type { DayInterface, LookupItemInterface } from "../../../types/interfaces";
+import { useLookup, useTheme } from "../../../context/index";
+import type {
+  DayInterface,
+  LookupItemInterface,
+} from "../../../types/interfaces";
 import { useApi } from "../../../hooks/useApi";
 
 const InsertDay = () => {
@@ -51,19 +53,21 @@ const InsertDay = () => {
   }`;
 
   const selectClasses = `appearance-none border-none w-full mr-3 py-1 px-2 leading-tight focus:outline-none ${
-    isDarkMode
-      ? "bg-gray-700 text-white"
-      : "bg-transparent text-gray-700"
+    isDarkMode ? "bg-gray-700 text-white" : "bg-transparent text-gray-700"
   }`;
 
   return (
-    <div className={`w-full shadow-md rounded px-8 pt-6 pb-8 mb-4 ${
-      isDarkMode ? "bg-gray-800" : "bg-white"
-    }`}>
+    <div
+      className={`w-full shadow-md rounded px-8 pt-6 pb-8 mb-4 ${
+        isDarkMode ? "bg-gray-800" : "bg-white"
+      }`}
+    >
       <form className="w-full">
-        <div className={`flex items-center border-b py-2 ${
-          isDarkMode ? "border-teal-400" : "border-teal-500"
-        }`}>
+        <div
+          className={`flex items-center border-b py-2 ${
+            isDarkMode ? "border-teal-400" : "border-teal-500"
+          }`}
+        >
           {/* date - disabled */}
           <div>
             <label htmlFor="date" className={labelClasses}>
@@ -165,7 +169,9 @@ const InsertDay = () => {
             Add
           </button>
         </div>
-        <p className={`block ${isDarkMode ? "text-gray-200" : "text-black"}`}>{feedback}</p>
+        <p className={`block ${isDarkMode ? "text-gray-200" : "text-black"}`}>
+          {feedback}
+        </p>
       </form>
     </div>
   );

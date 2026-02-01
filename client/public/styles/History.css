@@ -1,0 +1,107 @@
+.history {
+  background: var(--bg-secondary);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 10px 40px var(--shadow);
+  min-width: 300px;
+  max-width: 350px;
+  max-height: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.history-header h3 {
+  color: var(--text-primary);
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.clear-history {
+  background: var(--clear-bg);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.clear-history:hover {
+  background: var(--clear-hover);
+  transform: translateY(-2px);
+}
+
+.history-empty {
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 40px 20px;
+  font-style: italic;
+}
+
+.history-list {
+  overflow-y: auto;
+  flex: 1;
+}
+
+.history-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.history-list::-webkit-scrollbar-track {
+  background: var(--bg-display);
+  border-radius: 10px;
+}
+
+.history-list::-webkit-scrollbar-thumb {
+  background: var(--accent-color);
+  border-radius: 10px;
+}
+
+.history-list::-webkit-scrollbar-thumb:hover {
+  background: var(--operator-bg);
+}
+
+.history-item {
+  background: var(--bg-display);
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 10px;
+  transition: all 0.2s ease;
+  border-left: 3px solid var(--accent-color);
+}
+
+.history-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.history-expression {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+  word-wrap: break-word;
+}
+
+.history-result {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+  word-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+  .history {
+    max-width: 100%;
+    width: 100%;
+  }
+}

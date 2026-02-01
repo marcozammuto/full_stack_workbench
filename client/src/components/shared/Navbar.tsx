@@ -1,28 +1,20 @@
-import { useTheme } from "../context/ThemeContext";
-import { useUser } from "../context/UserContext";
+import { useTheme, useUser } from "../../context/index";
 import { Link, useNavigate } from "react-router";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import { capitalizeString } from "../utils/strings";
+import { capitalizeString } from "../../utils/strings";
+import { useState } from "react";
 
 const Navbar = () => {
   const { isDarkMode, toggleTheme } = useTheme();
   const { user, logout } = useUser();
+  const [projectButtonMessage, setProjectButtonMessage] =
+    useState<string>("Projects");
   const navigate = useNavigate();
 
   // Base button styles
   const buttonBase =
-    "inline-flex items-center justify-center rounded-md text-sm font-medium transition-all duration-200 h-9 px-3";
+    "inline-flex items-center justify-center rounded-md text-sm font-medium transition-all duration-200 h-9 px-3 cursor-pointer";
 
-  function getNavLinkStyles(path: string) {
-    const isActive = location.pathname === `/${path}`;
-    return isActive
-      ? isDarkMode
-        ? "bg-blue-900 text-blue-300"
-        : "bg-blue-100 text-blue-600"
-      : isDarkMode
-        ? "text-gray-300 hover:text-white hover:bg-gray-800"
-        : "text-gray-600 hover:text-blue-600 hover:bg-blue-50";
-  }
   return (
     <nav
       className={`sticky top-0 z-40 border-b backdrop-blur-sm ${
@@ -46,26 +38,16 @@ const Navbar = () => {
 
           {/* Nav Links */}
           <div className="hidden md:flex items-center gap-1">
-            {["documentation", "purpose"].map((link: string) => (
-              <Link
-                key={link}
-                to={link}
-                className={`${buttonBase} ${getNavLinkStyles(link)}`}
-              >
-                {capitalizeString(link)}
-              </Link>
-            ))}
-
-            {/* Projects Dropdown */}
-            <Menu as="div" className="relative">
+            {/* About Dropdown */}
+            <Menu as="div" className="relative cursor-pointer">
               <MenuButton
                 className={`${buttonBase} gap-1.5 ${
                   isDarkMode
-                    ? "bg-gray-800 text-gray-300 hover:text-white hover:bg-gray-700"
-                    : "bg-white text-gray-600 hover:text-blue-600 hover:bg-blue-50"
+                    ? "bg-gray-800 hover:bg-gray-700 text-gray-300"
+                    : "bg-white hover:bg-blue-50 hover:text-blue-600 text-gray-600"
                 }`}
               >
-                Projects
+                About
                 <svg
                   className="w-4 h-4 opacity-60"
                   fill="none"
@@ -82,26 +64,95 @@ const Navbar = () => {
               </MenuButton>
               <MenuItems
                 transition
-                className={`absolute right-0 z-50 mt-2 w-48 origin-top-right rounded-md shadow-lg overflow-hidden focus:outline-none transition data-[closed]:scale-95 data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:ease-out data-[leave]:duration-75 data-[leave]:ease-in ${
+                className={`absolute left-0 z-50 mt-2 w-48 origin-top-left rounded-md shadow-lg overflow-hidden focus:outline-none transition data-[closed]:scale-95 data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:ease-out data-[leave]:duration-75 data-[leave]:ease-in ${
                   isDarkMode
                     ? "bg-gray-800 ring-1 ring-white/10"
                     : "bg-white ring-1 ring-black/5"
                 }`}
               >
-                {["working-hours", "bookings"].map((project) => (
-                  <MenuItem key={`${project}_project`}>
+                {["documentation", "purpose"].map((page) => (
+                  <MenuItem key={page}>
                     <Link
-                      to={`/${project}`}
+                      to={`/${page}`}
                       className={`flex items-center gap-2 w-full px-4 py-2 text-sm ${
                         isDarkMode
                           ? "text-gray-300 data-[focus]:bg-gray-700 data-[focus]:text-white"
                           : "text-gray-700 data-[focus]:bg-blue-50 data-[focus]:text-blue-600"
                       }`}
                     >
-                      {capitalizeString(project.replace(/(-|_)+/g, " "))}
+                      {capitalizeString(page)}
                     </Link>
                   </MenuItem>
                 ))}
+              </MenuItems>
+            </Menu>
+
+            {/* Projects Dropdown */}
+            <Menu
+              onMouseEnter={() => {
+                if (!user) {
+                  setProjectButtonMessage("Login to view projects");
+                }
+              }}
+              onMouseLeave={() => setProjectButtonMessage("Projects")}
+              as="div"
+              className={`relative ${user ? "cursor-pointer" : "cursor-not-allowed"}`}
+            >
+              <MenuButton
+                disabled={!user}
+                className={`${buttonBase} gap-1.5 ${
+                  isDarkMode
+                    ? `${user ? "bg-gray-800 hover:bg-gray-700" : "bg-red-800 hover:bg-red-700"} text-gray-300`
+                    : `${user ? "bg-white hover:bg-blue-50 hover:text-blue-600" : "bg-red-50 hover:bg-red-100 hover:text-red-600"} text-gray-600`
+                }`}
+              >
+                {projectButtonMessage}
+                {user && (
+                  <svg
+                    className="w-4 h-4 opacity-60"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                )}
+              </MenuButton>
+              <MenuItems
+                transition
+                className={`absolute right-0 z-50 mt-2 w-48 origin-top-right rounded-md shadow-lg overflow-hidden focus:outline-none transition data-[closed]:scale-95 data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:ease-out data-[leave]:duration-75 data-[leave]:ease-in ${
+                  isDarkMode
+                    ? "bg-gray-800 ring-1 ring-white/10"
+                    : "bg-white ring-1 ring-black/5"
+                }`}
+              >
+                {[
+                  "working-hours",
+                  "bookings",
+                  "form",
+                  "calculator",
+                  "todo-list",
+                ]
+                  .sort((a: string, b: string) => a.localeCompare(b))
+                  .map((project) => (
+                    <MenuItem key={`${project}_project`}>
+                      <Link
+                        to={`/${project}`}
+                        className={`flex items-center gap-2 w-full px-4 py-2 text-sm ${
+                          isDarkMode
+                            ? "text-gray-300 data-[focus]:bg-gray-700 data-[focus]:text-white"
+                            : "text-gray-700 data-[focus]:bg-blue-50 data-[focus]:text-blue-600"
+                        }`}
+                      >
+                        {capitalizeString(project.replace(/(-|_)+/g, " "))}
+                      </Link>
+                    </MenuItem>
+                  ))}
               </MenuItems>
             </Menu>
           </div>

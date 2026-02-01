@@ -1,6 +1,5 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import { useBackend } from "../../context/BackendContext";
-import { useTheme } from "../../context/ThemeContext";
+import { useBackend, useTheme } from "../../context/index";
 import type { BackendInterface } from "../../types/interfaces";
 import { availableBackends } from "../../types/constants";
 import { getDropdownStyles } from "../../styles/dropdown";

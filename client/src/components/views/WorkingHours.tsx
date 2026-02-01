@@ -1,8 +1,9 @@
 import { useEffect } from "react";
-import { useDays } from "../../context/DayContext";
+import { useDays } from "../../context/index";
 import DayTable from "../features/working-hours/DayTable";
 import InsertDay from "../features/working-hours/InsertDay";
 import { useApi } from "../../hooks/useApi";
+import PageHeading from "../shared/PageHeading";
 
 const WorkingHours = () => {
   const api = useApi();
@@ -21,6 +22,10 @@ const WorkingHours = () => {
 
   return (
     <>
+      <PageHeading
+        title="Working Hours"
+        subtitle="Track your working hours with Prisma, third-party APIS and lookup data"
+      />
       <DayTable days={days} />
       <hr />
       <InsertDay />

@@ -1,0 +1,99 @@
+.calc-button {
+  padding: 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  box-shadow: 0 2px 5px var(--shadow);
+}
+
+.calc-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 1px 2px var(--shadow);
+}
+
+.calc-button.number {
+  background: var(--button-bg);
+  color: var(--text-primary);
+}
+
+.calc-button.number:hover {
+  background: var(--button-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--shadow);
+}
+
+.calc-button.operator {
+  background: var(--operator-bg);
+  color: white;
+}
+
+.calc-button.operator:hover {
+  background: var(--operator-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--shadow);
+}
+
+.calc-button.function {
+  background: var(--function-bg);
+  color: white;
+  font-size: 0.95rem;
+}
+
+.calc-button.function:hover {
+  background: var(--function-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--shadow);
+}
+
+.calc-button.equals {
+  background: var(--equals-bg);
+  color: white;
+}
+
+.calc-button.equals:hover {
+  background: var(--equals-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--shadow);
+}
+
+.calc-button.clear {
+  background: var(--clear-bg);
+  color: white;
+}
+
+.calc-button.clear:hover {
+  background: var(--clear-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--shadow);
+}
+
+.calc-button.special {
+  background: var(--button-bg);
+  color: var(--text-primary);
+  border: 2px solid var(--border-color);
+}
+
+.calc-button.special:hover {
+  background: var(--button-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--shadow);
+}
+
+.calc-button.wide {
+  grid-column: span 2;
+}
+
+@media (max-width: 480px) {
+  .calc-button {
+    padding: 15px;
+    font-size: 1rem;
+  }
+
+  .calc-button.function {
+    font-size: 0.85rem;
+  }
+}
