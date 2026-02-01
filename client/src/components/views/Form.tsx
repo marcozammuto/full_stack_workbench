@@ -19,10 +19,6 @@ interface FormInterface {
   age: string;
 }
 
-interface InputFieldProps extends FieldInterface {
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
 const init: FormInterface = {
   firstName: "",
   lastName: "",

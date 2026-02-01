@@ -13,7 +13,7 @@ export interface FieldInterface {
   placeholder: string;
   label: string;
   type?: InputType;
-  onChange: void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface UserInterface {

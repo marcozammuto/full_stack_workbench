@@ -23,6 +23,8 @@
   },
   "devDependencies": {
     "@reduxjs/toolkit": "^2.11.2",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@types/jest": "^30.0.0",
     "@types/node": "^25.0.10"
   }
 }
