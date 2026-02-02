@@ -4,6 +4,16 @@ import { useUser } from "../context/UserContext.tsx";
 import { useCallback, useMemo } from "react";
 import { useNavigate } from "react-router";
 
+/**
+ * Custom hook that creates an axios instance configured for API calls
+ *
+ * Features:
+ * - Automatically uses the current backend endpoint from BackendContext
+ * - Includes credentials (cookies) for authentication
+ * - Intercepts 401 responses to handle session expiration
+ *
+ * @returns Configured axios instance
+ */
 export const useApi = () => {
   const { backend } = useBackend();
   const { setUser } = useUser();

@@ -2,16 +2,25 @@ import { createContext, useContext, useState } from "react";
 import type { BackendInterface } from "../types/interfaces";
 import { availableBackends } from "../types/constants";
 
-// interfaces
+/**
+ * Backend Context
+ * Manages the currently selected backend (Node, Spring, Flask)
+ * Allows switching between different API implementations
+ */
+
 interface BackendContextInterface {
   backend: BackendInterface;
   setBackend: (backend: BackendInterface) => void;
 }
-// provider
+
 const BackendContext = createContext<BackendContextInterface | undefined>(
   undefined,
 );
 
+/**
+ * Provider component for backend selection
+ * Initializes with Node.js backend as default
+ */
 export const BackendContextProvider = ({
   children,
 }: {
@@ -27,7 +36,11 @@ export const BackendContextProvider = ({
   );
 };
 
-// hook
+/**
+ * Hook to access and switch the current backend
+ * @returns Current backend and setter function
+ * @throws Error if used outside of BackendContextProvider
+ */
 export const useBackend = (): BackendContextInterface => {
   const context = useContext(BackendContext);
   if (!context)

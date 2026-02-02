@@ -3,6 +3,15 @@ import { signToken } from "../services/jwtService.js";
 import prisma from "../db/db.js";
 import { RESPONSE_MESSAGES, NODE_ENV_ENUM, QUERY_PARAMS, } from "../types/constants.js";
 import { URL } from "node:url";
+/**
+ * Authentication Controller
+ * Handles user registration, login, logout, and password recovery
+ */
+/**
+ * Handles user registration
+ * @route POST /auth/signup
+ * @returns 201 on success, 409 if email already exists
+ */
 export const handleSignup = async (req, res, next) => {
     try {
         const { email, password } = req.body;
@@ -34,6 +43,11 @@ export const handleSignup = async (req, res, next) => {
         return next(error);
     }
 };
+/**
+ * Handles user login and JWT token generation
+ * @route POST /auth/login
+ * @returns 200 with user data and sets HTTP-only cookie, 401 on invalid credentials
+ */
 export const handleLogin = async (req, res, next) => {
     try {
         const { email, password } = req.body;
@@ -66,6 +80,11 @@ export const handleLogin = async (req, res, next) => {
         return next(error);
     }
 };
+/**
+ * Handles user logout by clearing the auth cookie
+ * @route POST /auth/logout
+ * @returns 200 on success
+ */
 export const handleLogout = (req, res, next) => {
     try {
         res.clearCookie("token");
@@ -75,6 +94,11 @@ export const handleLogout = (req, res, next) => {
         return next(err);
     }
 };
+/**
+ * Returns the currently authenticated user's data
+ * @route GET /auth/me
+ * @returns 200 with user data, 404 if user not found
+ */
 export const handleGetMe = async (req, res, next) => {
     try {
         const user = await prisma.user.findUnique({
@@ -92,6 +116,11 @@ export const handleGetMe = async (req, res, next) => {
         return next(err);
     }
 };
+/**
+ * Issues a password reset token and generates recovery URL
+ * @route POST /auth/password/forgot
+ * @returns 200 with recovery endpoint (always returns 200 to prevent email enumeration)
+ */
 export const issuePasswordChangeToken = async (req, res, next) => {
     try {
         const { email } = req.body;
@@ -132,6 +161,13 @@ export const issuePasswordChangeToken = async (req, res, next) => {
         return next(err);
     }
 };
+/**
+ * Handles password reset using a valid recovery token
+ * @route POST /auth/password/reset
+ * @query tkn - The recovery token sent to user's email
+ * @query code - The user's unique code
+ * @returns 200 on success, 500 on invalid token or user
+ */
 export const handlePasswordChange = async (req, res, next) => {
     const { tkn, code } = req.query;
     const { password } = req.body;
