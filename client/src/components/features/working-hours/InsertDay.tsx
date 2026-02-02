@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLookup, useTheme } from "../../../context/index";
+import { useLookup, useTheme, useDays } from "../../../context/index";
 import type {
   DayInterface,
   LookupItemInterface,
@@ -9,8 +9,9 @@ import { useApi } from "../../../hooks/useApi";
 const InsertDay = () => {
   const { lookup } = useLookup();
   const { isDarkMode } = useTheme();
+  const { refetchDays } = useDays();
   const today = new Date();
-  const todayDate = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, "0")}-${today.getDate().toString()}`;
+  const todayDate = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, "0")}-${today.getDate().toString().padStart(2, "0")}`;
   const isWeekend = [0, 6].includes(today.getDay());
   const [feedback, setFeedback] = useState<string>("");
   const [newDay, setNewDay] = useState<DayInterface>({
@@ -39,6 +40,7 @@ const InsertDay = () => {
       )
       .then((res) => {
         setFeedback(res.data.message);
+        refetchDays();
       })
       .catch((err) => {
         console.log(err);

@@ -1,7 +1,7 @@
 import prisma from "../db/db.js";
 import { Day } from "../services/dayService.js";
 import { RESPONSE_MESSAGES } from "../types/constants.js";
-import { splitDate } from "../utils/strings.js";
+import { splitDate, timeToMinutes } from "../utils/strings.js";
 import { toDayDto } from "../dto/dayDto.js";
 export const getAllDays = async (req, res, _next) => {
     const user = await prisma.user.findUnique({
@@ -64,7 +64,7 @@ export const createDay = async (req, res, next) => {
             message: RESPONSE_MESSAGES.DAY_MODIFIER_NOT_FOUND,
         });
     }
-    const day = new Day(notes, dayModifierId.id, user.id, startedAt, endedAt);
+    const day = new Day(notes, dayModifierId.id, user.id, timeToMinutes(startedAt), timeToMinutes(endedAt));
     await prisma.day.create({ data: day });
     return res.status(200).json({
         day: day,

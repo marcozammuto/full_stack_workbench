@@ -1,5 +1,11 @@
 import { RESPONSE_MESSAGES } from "../types/constants.js";
 
+// Converts "09:00" to 540 (minutes from midnight)
+export const timeToMinutes = (time: string): number => {
+  const [hours, minutes] = time.split(":").map(Number);
+  return hours * 60 + minutes;
+};
+
 export const splitDate = (stringDate: Date): string => {
   const isoString = stringDate.toISOString();
   if (/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/.test(isoString)) {

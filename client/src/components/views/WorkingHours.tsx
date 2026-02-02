@@ -2,23 +2,14 @@ import { useEffect } from "react";
 import { useDays } from "../../context/index";
 import DayTable from "../features/working-hours/DayTable";
 import InsertDay from "../features/working-hours/InsertDay";
-import { useApi } from "../../hooks/useApi";
 import PageHeading from "../shared/PageHeading";
 
 const WorkingHours = () => {
-  const api = useApi();
-  const { days, setDays } = useDays();
+  const { days, refetchDays } = useDays();
+
   useEffect(() => {
-    api
-      .get(`/day`, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        if (res.data) {
-          setDays(res.data.data);
-        }
-      });
-  }, []);
+    refetchDays();
+  }, [refetchDays]);
 
   return (
     <>

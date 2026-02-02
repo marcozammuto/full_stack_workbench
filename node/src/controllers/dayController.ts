@@ -2,7 +2,7 @@ import { NextFunction, Response, Request } from "express";
 import prisma from "../db/db.js";
 import { Day } from "../services/dayService.js";
 import { RESPONSE_MESSAGES } from "../types/constants.js";
-import { splitDate } from "../utils/strings.js";
+import { splitDate, timeToMinutes } from "../utils/strings.js";
 import { toDayDto } from "../dto/dayDto.js";
 
 export const getAllDays = async (
@@ -85,7 +85,13 @@ export const createDay = async (
     });
   }
 
-  const day = new Day(notes, dayModifierId.id, user.id, startedAt, endedAt);
+  const day = new Day(
+    notes,
+    dayModifierId.id,
+    user.id,
+    timeToMinutes(startedAt),
+    timeToMinutes(endedAt),
+  );
 
   await prisma.day.create({ data: day });
 

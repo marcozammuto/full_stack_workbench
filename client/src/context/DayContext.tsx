@@ -1,10 +1,12 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 import type { DayInterface } from "../types/interfaces";
+import { useApi } from "../hooks/useApi";
 
 // interface
 interface DayContextInterface {
   days: DayInterface[];
   setDays: (days: DayInterface[]) => void;
+  refetchDays: () => void;
 }
 
 // provider + consumer
@@ -16,8 +18,18 @@ export const DayContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [days, setDays] = useState<DayInterface[]>([]);
+  const api = useApi();
+
+  const refetchDays = useCallback(() => {
+    api.get(`/day`, { withCredentials: true }).then((res) => {
+      if (res.data?.data) {
+        setDays(res.data.data);
+      }
+    });
+  }, [api]);
+
   return (
-    <DayContext.Provider value={{ days, setDays }}>
+    <DayContext.Provider value={{ days, setDays, refetchDays }}>
       {children}
     </DayContext.Provider>
   );
