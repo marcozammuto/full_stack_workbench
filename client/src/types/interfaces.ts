@@ -30,7 +30,7 @@ export interface LookupItemInterface {
 
 export interface LookupInterface {
   holiday?: string;
-  dayModifier: LookupItemInterface[];
+  dayModifiers: LookupItemInterface[];
 }
 
 export interface DayInterface {

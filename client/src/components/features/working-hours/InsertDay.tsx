@@ -28,7 +28,10 @@ const InsertDay = () => {
       .post(
         `/day/`,
         {
-          day: newDay,
+          startedAt: newDay.startedAt,
+          endedAt: newDay.endedAt,
+          dayModifierCode: newDay.dayModifierCode,
+          notes: newDay.notes,
         },
         {
           withCredentials: true,
@@ -111,7 +114,7 @@ const InsertDay = () => {
               id="endedAt"
               className={inputClasses}
               type="time"
-              disabled={!isWeekend}
+              disabled={isWeekend}
               aria-label="End"
               defaultValue={newDay.endedAt}
               onChange={(e) =>
@@ -122,7 +125,7 @@ const InsertDay = () => {
               }
             />
           </div>
-          {lookup && lookup.dayModifier && (
+          {lookup && lookup.dayModifiers && (
             <div>
               <label htmlFor="dayModifier" className={labelClasses}>
                 Variation
@@ -131,8 +134,14 @@ const InsertDay = () => {
                 id="dayModifier"
                 className={selectClasses}
                 defaultValue={newDay.dayModifierCode}
+                onChange={(e) =>
+                  setNewDay((prev) => ({
+                    ...prev,
+                    dayModifierCode: e.target.value,
+                  }))
+                }
               >
-                {lookup.dayModifier.map((dm: LookupItemInterface) => (
+                {lookup.dayModifiers.map((dm: LookupItemInterface) => (
                   <option key={`${dm.code}_key`} value={dm.code}>
                     {dm.name}
                   </option>

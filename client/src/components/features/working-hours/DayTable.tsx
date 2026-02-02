@@ -11,7 +11,7 @@ const DayTable = ({ days }: { days: DayInterface[] }) => {
     >
       <table className="min-w-full">
         <TableHeading
-          keys={["Date", "Channel", "Guest", "Status", "Property"]}
+          keys={["Date", "Working Day", "Start", "End", "Modifier", "Notes"]}
         />
 
         <tbody
@@ -20,12 +20,12 @@ const DayTable = ({ days }: { days: DayInterface[] }) => {
           {days &&
             days.map((day: DayInterface) => (
               <tr key={`${day.date}_key`}>
-                <td className="text-black">{day.date}</td>
-                <td className="text-black">{day.isWorkingDay ? "Y" : "N"}</td>
-                <td className="text-black">{day.startedAt}</td>
-                <td className="text-black">{day.endedAt}</td>
-                <td className="text-black">{day.dayModifierCode}</td>
-                <td className="text-black">{day.notes || "/"}</td>
+                <td className="py-2 px-3">{day.date}</td>
+                <td className="py-2 px-3">{day.isWorkingDay ? "Yes" : "No"}</td>
+                <td className="py-2 px-3">{day.startedAt}</td>
+                <td className="py-2 px-3">{day.endedAt}</td>
+                <td className="py-2 px-3">{day.dayModifierCode}</td>
+                <td className="py-2 px-3">{day.notes || "-"}</td>
               </tr>
             ))}
         </tbody>

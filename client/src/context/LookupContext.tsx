@@ -32,7 +32,7 @@ export const LookupContextProvider = ({
         })
         .catch((err) => console.error(err));
     }
-  }, [backend?.endpoint]);
+  }, [backend?.endpoint, user]);
   return (
     <LookupContext.Provider value={{ lookup }}>
       {children}
