@@ -14,6 +14,8 @@ export interface FieldInterface {
   label: string;
   type?: InputType;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
+  required?: boolean;
 }
 
 export interface UserInterface {

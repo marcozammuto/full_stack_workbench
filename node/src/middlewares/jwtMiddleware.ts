@@ -6,9 +6,9 @@ export const authenticateToken = (
   res: Response,
   next: NextFunction,
 ) => {
-  const token = req.cookies.token.token;
+  const token = req.cookies?.token?.token || req.cookies?.token;
 
-  if (!token || token === undefined) {
+  if (!token) {
     return res.status(401).json({ message: "Unauthorized" });
   }
 

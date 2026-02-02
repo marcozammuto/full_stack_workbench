@@ -1,4 +1,4 @@
-name: Deploy Study Case (Backend TS + React)
+name: node deploy (Backend TS + React)
 
 on:
   push:
@@ -66,6 +66,7 @@ jobs:
 
                # Create .env file with secrets
                cat > .env << ENVFILE
+          NODE_ENV=production
           NODE_PORT=3001
           AWS_REGION=${{ secrets.AWS_REGION }}
           AWS_DYNAMO_DB_USER_ACCESS_ID=${{ secrets.AWS_DYNAMO_DB_USER_ACCESS_ID }}
@@ -73,7 +74,7 @@ jobs:
           DATABASE_URL=${{ secrets.DATABASE_URL }}
           JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}
           JWT_EXPIRES_IN=30m
-          NATIONAL_HOLIDAYS_API_HOST=https://openholidaysapi.org/PublicHolidays
+          NATIONAL_HOLIDAYS_API_HOST=${{ secrets.NATIONAL_HOLIDAYS_API_HOST }}
           ENVFILE
 
                # Install production dependencies

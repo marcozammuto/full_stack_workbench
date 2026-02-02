@@ -53,13 +53,14 @@ build/
 .history/
 *.code-workspace
 
-# ========================
-# Data files
-# ========================
-# Se vuoi versionare i CSV tienili, altrimenti ignora:
-# data/*.csv
-
+## node
 node/dist
 node/node_modules
 node/prisma/generated/prisma
 .env
+
+
+## not already implemented backends
+py/
+java/
+

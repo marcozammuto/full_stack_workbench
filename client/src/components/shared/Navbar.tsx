@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { capitalizeString } from "../../utils/strings";
 import { useState } from "react";
+import BackendSwitch from "../features/BackendSwitch";
 
 const Navbar = () => {
   const { isDarkMode, toggleTheme } = useTheme();
@@ -164,7 +165,7 @@ const Navbar = () => {
           {/* Right side items */}
           <div className="flex items-center gap-2">
             {/* Backend Switch */}
-            {/* <BackendSwitch /> */}
+            <BackendSwitch />
 
             {/* Theme Toggle */}
             <button

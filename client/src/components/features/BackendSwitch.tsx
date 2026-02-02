@@ -12,7 +12,7 @@ const BackendSwitch = () => {
 
   return (
     <Menu as="div" className={styles.wrapper}>
-      <MenuButton className={styles.button}>
+      <MenuButton disabled className={styles.button}>
         <Icon className={styles.itemIcon} />
         <span>{backend.name}</span>
       </MenuButton>

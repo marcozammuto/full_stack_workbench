@@ -70,7 +70,7 @@ const Documentation = () => {
           className={`list-disc list-inside ${isDarkMode ? "text-gray-300" : "text-gray-600"}`}
         >
           <li>
-            <span className={codeClass}>PostgreSQL</span> (Supabase) - Users,
+            <span className={codeClass}>PostgreSQL</span>  Users,
             Days, Modifiers
           </li>
           <li>

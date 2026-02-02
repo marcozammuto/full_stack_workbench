@@ -21,6 +21,7 @@ A full-stack application for managing working hours and bookings, demonstrating 
      ┌──────────┐  ┌──────────┐  ┌──────────┐
      │  Node.js │  │  Spring  │  │  Flask   │
      │ Express  │  │   Boot   │  │  Python  │
+     │    ✓     │  │ (Soon)   │  │ (Soon)   │
      └────┬─────┘  └────┬─────┘  └────┬─────┘
           │             │             │
           └─────────────┼─────────────┘
@@ -36,6 +37,8 @@ A full-stack application for managing working hours and bookings, demonstrating 
               └──────────────────┘
 ```
 
+> **Note:** This project demonstrates a multi-backend architecture. Currently, only the Node.js backend is fully implemented. Spring Boot and Flask backends are planned for future development to showcase the same API across different technologies.
+
 ## Tech Stack
 
 ### Frontend
@@ -50,12 +53,12 @@ A full-stack application for managing working hours and bookings, demonstrating 
 
 | Backend | Framework | Port | Status |
 |---------|-----------|------|--------|
-| Node.js | Express 5 + Prisma | 3001 | Production |
-| Java | Spring Boot 3 | 8080 | Development |
-| Python | Flask | 5000 | Development |
+| Node.js | Express 5 + Prisma | 3001 | ✅ Production |
+| Java | Spring Boot 3 | 8080 | 🚧 Coming Soon |
+| Python | Flask | 5000 | 🚧 Coming Soon |
 
 ### Databases
-- **PostgreSQL** (Supabase) - Users, Days, DayModifiers
+- **PostgreSQL** (Prisma) - Users, Days, DayModifiers
 - **DynamoDB** - Bookings with cursor-based pagination
 
 ### Infrastructure
@@ -78,8 +81,8 @@ A full-stack application for managing working hours and bookings, demonstrating 
 ### Prerequisites
 - Node.js 20+
 - npm or yarn
-- Java 17+ (for Spring Boot backend)
-- Python 3.10+ (for Flask backend)
+- Java 17+ (for Spring Boot backend) (coming soon)
+- Python 3.10+ (for Flask backend) (coming soon)
 
 ### Installation
 
@@ -137,12 +140,16 @@ cd client && npm run dev
 
 # Terminal 2: Start Node.js backend
 cd node && npm run dev
+```
 
-# Terminal 3 (optional): Start Spring Boot
-cd java && ./mvnw spring-boot:run
+### Running Tests
 
-# Terminal 4 (optional): Start Flask
-cd py && flask run
+```bash
+# Frontend tests
+cd client && npm test
+
+# Backend tests
+cd node && npm test
 ```
 
 ## Deployment
@@ -237,6 +244,22 @@ working_hours/
 | GET | `/lookup` | Get day modifiers and holidays |
 
 
+## Roadmap
+
+### Planned Features
+- [ ] **Spring Boot Backend** - Java implementation with Spring Security, JPA, and the same API contract
+- [ ] **Flask Backend** - Python implementation with SQLAlchemy and JWT authentication
+- [ ] **Docker** - Containerization for all services
+- [ ] **API Documentation** - OpenAPI/Swagger specification
+- [ ] **E2E Tests** - Cypress or Playwright integration tests
+
+### Recently Completed
+- [x] JWT Authentication with refresh tokens
+- [x] DynamoDB integration for bookings
+- [x] CI/CD pipeline with GitHub Actions
+- [x] Dark/Light theme support
+- [x] Unit tests for auth services
+
 ## Author
 
 Giuseppe Zammuto
@@ -244,8 +267,6 @@ Giuseppe Zammuto
 ## License
 
 MIT
-
-
 
 # Scientific Calculator
 

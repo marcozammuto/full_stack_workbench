@@ -39,10 +39,7 @@ const Purpose = () => {
           <li>
             Demonstrate a unified React frontend connecting to multiple backends
           </li>
-          <li>
-            Compare Node.js (Express), Java (Spring Boot), and Python (Flask)
-            implementations
-          </li>
+          <li>Compare different backend implementations (coming soon).</li>
           <li>Showcase modern authentication with JWT tokens</li>
           <li>
             Explore both SQL (PostgreSQL) and NoSQL (DynamoDB) database patterns
