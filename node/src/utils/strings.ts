@@ -2,7 +2,9 @@ import { RESPONSE_MESSAGES } from "../types/constants.js";
 
 // Converts "09:00" to 540 (minutes from midnight)
 export const timeToMinutes = (time: string): number => {
-  const [hours, minutes] = time.split(":").map(Number);
+  const parts = time.split(":").map(Number);
+  const hours = parts[0] ?? 0;
+  const minutes = parts[1] ?? 0;
   return hours * 60 + minutes;
 };
 

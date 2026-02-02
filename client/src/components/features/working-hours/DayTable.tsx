@@ -2,6 +2,14 @@ import { useTheme } from "../../../context/ThemeContext";
 import type { DayInterface } from "../../../types/interfaces";
 import { TableHeading } from "../../shared/Tables";
 
+// Converts 540 → "09:00"
+const minutesToTime = (minutes: string | number): string => {
+  if (typeof minutes === "string") return minutes;
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  return `${hours.toString().padStart(2, "0")}:${mins.toString().padStart(2, "0")}`;
+};
+
 const DayTable = ({ days }: { days: DayInterface[] }) => {
   const { isDarkMode } = useTheme();
 
@@ -22,8 +30,8 @@ const DayTable = ({ days }: { days: DayInterface[] }) => {
               <tr key={`${day.date}_key`}>
                 <td className="py-2 px-3">{day.date}</td>
                 <td className="py-2 px-3">{day.isWorkingDay ? "Yes" : "No"}</td>
-                <td className="py-2 px-3">{day.startedAt}</td>
-                <td className="py-2 px-3">{day.endedAt}</td>
+                <td className="py-2 px-3">{minutesToTime(day.startedAt)}</td>
+                <td className="py-2 px-3">{minutesToTime(day.endedAt)}</td>
                 <td className="py-2 px-3">{day.dayModifierCode}</td>
                 <td className="py-2 px-3">{day.notes || "-"}</td>
               </tr>

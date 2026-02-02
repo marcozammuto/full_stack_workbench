@@ -33,11 +33,12 @@ export interface LookupInterface {
   dayModifiers: LookupItemInterface[];
 }
 
+// Form input uses strings ("09:00"), API returns numbers (540)
 export interface DayInterface {
   date: string;
   notes: string;
-  startedAt: string;
-  endedAt: string;
+  startedAt: string | number;
+  endedAt: string | number;
   dayModifierCode: string;
   isWorkingDay: boolean;
   createdAt?: Date;
